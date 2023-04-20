@@ -68,43 +68,33 @@ Tables :
 
 Relations :
 
-    Une compétition a lieu sur un site.
-    Une compétition peut comporter plusieurs disciplines.
-    Une discipline peut être présente dans plusieurs compétitions.
-    Une session est associée à une compétition, un site et une discipline.
-    Une session peut accueillir plusieurs athlètes.
-    Un utilisateur peut se connecter à plusieurs sessions.
+   
 
 Attributs :
-
-    Competition
-        id (clé primaire)
-        name
-        start_date
-        end_date
     Site
-        id (clé primaire)
-        name
-        address
+        name (primary key)
+        city (primary key)
+        category
     Discipline
-        id (clé primaire)
-        name
+        name (primary key)
+        flag
     Session
-        id (clé primaire)
-        competition_id (clé étrangère vers la table Competition)
-        site_id (clé étrangère vers la table Site)
-        discipline_id (clé étrangère vers la table Discipline)
-        start_datetime
-        end_datetime
+        code (primary key)
+        date
+        start_time
+        end_time
+        discipline
+        site
+        description
+        type
+        category
     Athlete
-        id (clé primaire)
-        first_name
-        last_name
+        first_name (primary key)
+        last_name (primary key)
         birth_date
         gender
         nationality
     User
-        id (clé primaire)
-        username
+        username (primary key)
         password
         role
