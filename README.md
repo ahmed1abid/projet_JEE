@@ -71,14 +71,20 @@ Relations :
    
 
 Attributs :
+
     Site
+    
         name (primary key)
         city (primary key)
         category
+        
     Discipline
+    
         name (primary key)
         flag
+        
     Session
+    
         code (primary key)
         date
         start_time
@@ -88,13 +94,17 @@ Attributs :
         description
         type
         category
+        
     Athlete
+    
         first_name (primary key)
         last_name (primary key)
         birth_date
         gender
         nationality
+        
     User
+    
         username (primary key)
         password
         role
