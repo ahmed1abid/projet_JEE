@@ -59,7 +59,6 @@ Enfin, la création de la base de données peut être réalisée en amont, par n
 
 Tables :
 
-    Competition
     Site
     Discipline
     Session
