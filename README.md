@@ -89,7 +89,8 @@ Attributs :
         start_time
         end_time
         discipline
-        site
+        site_name
+        site_city
         description
         type
         category
