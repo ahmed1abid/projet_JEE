@@ -7,6 +7,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -36,24 +38,29 @@ public class DisciplineController {
 	
 	@POST
 	@Path("/new/")
-	public void createDiscipline(@FormParam("name") String name,
+	public Response createDiscipline(@FormParam("name") String name,
 						   @FormParam("flag") Integer flag) {
 		Discipline discipline = new Discipline(name, flag!=0);
-		disciplineDAO.CreateDiscipline(discipline);
+		if (!disciplineDAO.CreateDiscipline(discipline)) {
+			return Response.serverError().build();
+		} return Response.ok().build();
 	}
 	
 	@POST
 	@Path("/edit/")
-	public void setDisciplineFlag(@QueryParam("name") String name,
+	public Response setDisciplineFlag(@QueryParam("name") String name,
 						   		  @FormParam("flag") Integer new_flag) {
-		disciplineDAO.EditDiscipline(name, new_flag!=0);
-		
+		if (!disciplineDAO.EditDiscipline(name, new_flag!=0)) {
+			return Response.serverError().build();
+		} return Response.ok().build();
 	}
 	
 	@POST
 	@Path("/delete/")
-	public void deleteSite(@QueryParam("name") String name) {
-		disciplineDAO.DeleteDiscipline(name);
+	public Response deleteSite(@QueryParam("name") String name) {
+		if (!disciplineDAO.DeleteDiscipline(name)) {
+			return Response.serverError().build();
+		} return Response.ok().build();
 	}
 
 }

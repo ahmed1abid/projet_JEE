@@ -46,50 +46,50 @@ public class SiteDAOImpl implements SiteDAO{
 	}
 	
 	@Override
-	public void CreateSite(Site new_site) {
+	public boolean CreateSite(Site new_site) throws SiteAlreadyExistsException {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
-			
 			Statement statement = conn.createStatement();
-			ResultSet rs = statement.executeQuery("select name, city from site");
-			while ( rs.next() ) {
-				if (rs.getString("name").equals(new_site.getName()) && (rs.getString("city").equals(new_site.getCity()))) {
-					throw new SQLException(String.format("Le site '%s' dans la ville '%s' exite déjà", new_site.getName(),
-							new_site.getCity()));
-				}
-			}
-			statement.executeUpdate(String.format("insert into site(name, city, category) values('%s', '%s', '%s')",
-					new_site.getName(), new_site.getCity(), new_site.getCategory()));
+			ResultSet rs = statement.executeQuery(String.format("select idSite from site where name='%s' and city='%s'",
+					new_site.getName(), new_site.getCity()));
+			if ( !rs.next() ) {
+				statement.executeUpdate(String.format("insert into site(name, city, category) values('%s', '%s', '%s')",
+						new_site.getName(), new_site.getCity(), new_site.getCategory()));
+				return true;
+			} throw new SiteAlreadyExistsException(String.format("Le site '%s' dans la ville '%s' exite déjà", new_site.getName(),
+					new_site.getCity()));
 		} catch (SQLException e) {
 			System.out.println(e);
+			return false;
 		}
-		
 	}
 
 	@Override
-	public void EditSite(int id, Site site) {
+	public boolean EditSite(int id, Site site) {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
-			
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(String.format("update site set name='%s', city='%s', category='%s' "
 					+ "where idSite=%d",
 					site.getName(), site.getCity(), site.getCategory(), id));
+			return true;
 		} catch (SQLException e) {
 			System.out.println(e);
+			return false;
 		}
 		
 	}
 
 	@Override
-	public void DeleteSite(int id) {
+	public boolean DeleteSite(int id) {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
-			
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(String.format("delete from site where idSite=%d", id));
+			return true;
 		} catch (SQLException e) {
 			System.out.println(e);
+			return false;
 		}
 		
 	}

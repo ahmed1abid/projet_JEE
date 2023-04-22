@@ -47,42 +47,46 @@ public class DisciplineDAOImpl implements DisciplineDAO {
 	}
 
 	@Override
-	public void CreateDiscipline(Discipline new_discipline) {
+	public boolean CreateDiscipline(Discipline new_discipline) {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
 			
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(String.format("insert into discipline values('%s', '%s')",
 					new_discipline.getName(), new_discipline.getFlag()));
+			return true;
 		} catch (SQLException e) {
 			System.out.println(e);
+			return false;
 		}
 		
 	}
 
 	@Override
-	public void EditDiscipline(String name, Boolean new_flag) {
+	public boolean EditDiscipline(String name, Boolean new_flag) {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
-			
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(String.format("update discipline set flag='%d' where name='%s'",
 					new_flag, name));
+			return true;
 		} catch (SQLException e) {
 			System.out.println(e);
+			return false;
 		}
 		
 	}
 
 	@Override
-	public void DeleteDiscipline(String name) {
+	public boolean DeleteDiscipline(String name) {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
-			
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(String.format("delete from discipline where name='%s'", name));
+			return true;
 		} catch (SQLException e) {
 			System.out.println(e);
+			return false;
 		}
 		
 	}
