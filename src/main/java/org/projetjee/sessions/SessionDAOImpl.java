@@ -18,14 +18,14 @@ public class SessionDAOImpl implements SessionDAO{
 		try {
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery("select code, date, start_time, "
-					+ "end_time, discipline.name as discipline, site.name as site_name, site.city as site_city, description, "
-					+ "type, session.category as category from session, "
-					+ "where session.site = site.id and session.discipline = discipline.name");
+					+ "end_time, discipline.name as dsc_name, site.name as site_name, site.city as site_city, description, "
+					+ "type, session.category as ctgry from session, site, discipline"
+					+ "where session.idSite = site.idSite and session.discipline = discipline.name");
 			while ( rs.next() ) {
 				sessions.add(new Session(rs.getString("code"), rs.getDate("date"), rs.getTime("start_time"),
-						rs.getTime("end_time"), rs.getString("discipline"), rs.getString("site_name"),
+						rs.getTime("end_time"), rs.getString("dsc_name"), rs.getString("site_name"),
 						rs.getString("site_city"), rs.getString("description"),
-						SessionType.valueOf(rs.getString("type")), SessionCategory.valueOf(rs.getString("category"))));
+						SessionType.valueOf(rs.getString("type")), SessionCategory.valueOf(rs.getString("ctgry"))));
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -42,14 +42,14 @@ public class SessionDAOImpl implements SessionDAO{
 		try {
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery("select code, date, start_time, "
-					+ "end_time, discipline.name as discipline, site.name as site_name, site.city as site_city, description, "
-					+ "type, session.category as category from session, "
-					+ "where session.site = site.id and session.discipline = discipline.name and code='"+searchText+"'");
+					+ "end_time, discipline.name as dsc_name, site.name as site_name, site.city as site_city, description, "
+					+ "type, session.category as ctgry from session, site, discipline"
+					+ "where session.idSite = site.idSite and session.discipline = discipline.name and code='"+searchText+"'");
 			if ( rs.next() ) {
 				sessions.add(new Session(rs.getString("code"), rs.getDate("date"), rs.getTime("start_time"),
-						rs.getTime("end_time"), rs.getString("discipline"), rs.getString("site_name"),
+						rs.getTime("end_time"), rs.getString("dsc_name"), rs.getString("site_name"),
 						rs.getString("site_city"), rs.getString("description"),
-						SessionType.valueOf(rs.getString("type")), SessionCategory.valueOf(rs.getString("category"))));
+						SessionType.valueOf(rs.getString("type")), SessionCategory.valueOf(rs.getString("ctgry"))));
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -87,7 +87,7 @@ public class SessionDAOImpl implements SessionDAO{
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
 			String query_base = "update session set date=?, start_time=?, end_time=?, discipline=?, "
-					+ "site=?, description=?, type=?, category=? where code=?";
+					+ "idSite=?, description=?, type=?, category=? where code=?";
 			PreparedStatement pstatement = conn.prepareStatement(query_base);
 			pstatement.setDate(1, session.getDate());
 			pstatement.setTime(2, session.getStart_time());

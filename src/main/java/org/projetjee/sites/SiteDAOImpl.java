@@ -18,7 +18,7 @@ public class SiteDAOImpl implements SiteDAO{
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery("select * from site");
 			while ( rs.next() ) {
-				sites.add(new Site(rs.getInt("id"), rs.getString("name"), rs.getString("city"), SiteCategory.valueOf(rs.getString("category"))));
+				sites.add(new Site(rs.getInt("idSite"), rs.getString("name"), rs.getString("city"), SiteCategory.valueOf(rs.getString("category"))));
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -36,7 +36,7 @@ public class SiteDAOImpl implements SiteDAO{
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery("select * from site where name like '%"+searchText+"%'");
 			while ( rs.next() ) {
-				sites.add(new Site(rs.getInt("id"), rs.getString("name"), rs.getString("city"), SiteCategory.valueOf(rs.getString("category"))));
+				sites.add(new Site(rs.getInt("idSite"), rs.getString("name"), rs.getString("city"), SiteCategory.valueOf(rs.getString("category"))));
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -73,7 +73,7 @@ public class SiteDAOImpl implements SiteDAO{
 			
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(String.format("update site set name='%s', city='%s', category='%s' "
-					+ "where id=%d",
+					+ "where idSite=%d",
 					site.getName(), site.getCity(), site.getCategory(), id));
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -87,7 +87,7 @@ public class SiteDAOImpl implements SiteDAO{
 		try {
 			
 			Statement statement = conn.createStatement();
-			statement.executeUpdate(String.format("delete from site where id=%d", id));
+			statement.executeUpdate(String.format("delete from site where idSite=%d", id));
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
