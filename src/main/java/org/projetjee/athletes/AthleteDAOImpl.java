@@ -56,8 +56,10 @@ public class AthleteDAOImpl implements AthleteDAO{
 	public boolean Import(List<String[]> rows) throws NotEnoughRowsException {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
-			if (rows.size() != 6) {
-				throw new NotEnoughRowsException("File does not contain enough rows");
+			for (String[] row : rows) {
+				if (row.length != 6) {
+					throw new NotEnoughRowsException("File does not contain enough rows");
+				}
 			}
 			conn.setAutoCommit(false);
 			conn.createStatement().executeUpdate("delete from athlete");
