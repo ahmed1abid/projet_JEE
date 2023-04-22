@@ -59,7 +59,7 @@ public class SessionDAOImpl implements SessionDAO{
 	}
 
 	@Override
-	public void CreateSession(Session new_session) {
+	public boolean CreateSession(Session new_session) {
 		Connection conn = DBManager.getInstance().getConnection();
 		
 		// if not time overlap
@@ -76,14 +76,16 @@ public class SessionDAOImpl implements SessionDAO{
 			pstatement.setString(8, new_session.getType());
 			pstatement.setString(9, new_session.getCategory());
 			pstatement.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			System.out.println(e);
+			return false;
 		}
 		
 	}
 
 	@Override
-	public void EditSession(String code, Session session) {
+	public boolean EditSession(String code, Session session) {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
 			String query_base = "update session set date=?, start_time=?, end_time=?, discipline=?, "
@@ -99,21 +101,24 @@ public class SessionDAOImpl implements SessionDAO{
 			pstatement.setString(8, session.getCategory());
 			pstatement.setString(9, code);
 			pstatement.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			System.out.println(e);
+			return false;
 		}
 		
 	}
 
 	@Override
-	public void DeleteSession(String code) {
+	public boolean DeleteSession(String code) {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
-			
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(String.format("delete from session where code='%s'", code));
+			return true;
 		} catch (SQLException e) {
 			System.out.println(e);
+			return false;
 		}
 		
 	}

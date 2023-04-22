@@ -1,6 +1,7 @@
 package org.projetjee.athletes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface AthleteDAO {
 	
@@ -8,10 +9,8 @@ public ArrayList<Athlete> findByAll();
 	
 	public ArrayList<Athlete> findByName(String firstName, String lastName);
 	
-	public void ImportFromCSV();
+	public boolean Import(List<String[]> rows);
 	
-	public void EditDiscipline(String firstName, String lastName, Athlete athlete);
-	
-	public void DeleteAthlete(String firstName, String lastName);
+	public boolean DeleteAthlete(String firstName, String lastName);
 
 }

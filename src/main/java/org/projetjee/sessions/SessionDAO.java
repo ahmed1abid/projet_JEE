@@ -9,10 +9,10 @@ public ArrayList<Session> findByAll();
 	
 	public ArrayList<Session> findByCode(String searchText);
 	
-	public void CreateSession(Session new_session);
+	public boolean CreateSession(Session new_session);
 	
-	public void EditSession(String code, Session session);
+	public boolean EditSession(String code, Session session);
 	
-	public void DeleteSession(String code);
+	public boolean DeleteSession(String code);
 
 }

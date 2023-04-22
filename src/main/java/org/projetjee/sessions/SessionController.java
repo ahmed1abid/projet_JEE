@@ -7,6 +7,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -39,7 +40,7 @@ public class SessionController {
 	
 	@POST
 	@Path("/new/")
-	public void createSession(@FormParam("code") String code, @FormParam("date") Date date,
+	public Response createSession(@FormParam("code") String code, @FormParam("date") Date date,
 							@FormParam("start_time") Time start_time, @FormParam("end_time") Time end_time,
 							@FormParam("discipline") String discipline, @FormParam("site") int site,
 							@FormParam("description") String description, @FormParam("type") String type,
@@ -49,28 +50,34 @@ public class SessionController {
 				SessionType.valueOf(type), SessionCategory.valueOf(category));
 		if (!session.validCode()) {
 			System.out.println("Session code must match '3 first letters of discipline + two-digits number'");
+			return Response.status(422).build();
 		} else {
-			sessionDAO.CreateSession(session);
+			if (!sessionDAO.CreateSession(session)) {
+				return Response.serverError().build();
+			} return Response.ok().build();
 		}
 	}
 	
 	@POST
 	@Path("/edit/")
-	public void editSession(@QueryParam("code") String code, @FormParam("newdate") Date newDate,
+	public Response editSession(@QueryParam("code") String code, @FormParam("newdate") Date newDate,
 							@FormParam("newStart_time") Time newStart_time, @FormParam("newEnd_time") Time newEnd_time,
 							@FormParam("newDiscipline") String newDiscipline, @FormParam("newSite") int newSite,
 							@FormParam("newDescription") String newDescription, @FormParam("newType") String newType,
 							@FormParam("newCategory") String newCategory) {
 		Session session = new Session(code, newDate, newStart_time, newEnd_time, newDiscipline, newSite, newDescription,
 				SessionType.valueOf(newType), SessionCategory.valueOf(newCategory));
-		sessionDAO.EditSession(code, session);
-		
+		if (!sessionDAO.EditSession(code, session)) {
+			return Response.serverError().build();
+		} return Response.ok().build();		
 	}
 	
 	@POST
 	@Path("/delete/")
-	public void deleteSite(@QueryParam("code") String code) {
-		sessionDAO.DeleteSession(code);
+	public Response deleteSite(@QueryParam("code") String code) {
+		if (!sessionDAO.DeleteSession(code)) {
+			return Response.serverError().build();
+		} return Response.ok().build();
 	}
 
 }

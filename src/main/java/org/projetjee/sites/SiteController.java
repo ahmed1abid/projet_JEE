@@ -6,6 +6,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -35,28 +37,38 @@ public class SiteController {
 	
 	@POST
 	@Path("/new/")
-	public void createSite(@FormParam("name") String name,
+	public Response createSite(@FormParam("name") String name,
 						   @FormParam("city") String city,
 						   @FormParam("category") String category) {
 		Site site = new Site(name, city, SiteCategory.valueOf(category));
-		siteDAO.CreateSite(site);
+		try {
+			if (!siteDAO.CreateSite(site)) {
+				return Response.serverError().build();
+			} return Response.ok().build();
+		} catch(SiteAlreadyExistsException e) {
+			return Response.status(422, e.getMessage()).build();
+		}
 	}
 	
 	@POST
 	@Path("/edit/")
-	public void editSite(@QueryParam("id") int id,
+	public Response editSite(@QueryParam("id") int id,
 						   @FormParam("newName") String newName,
 						   @FormParam("newCity") String newCity,
 						   @FormParam("newCategory") String newCategory) {
 		Site site = new Site(newName, newCity, SiteCategory.valueOf(newCategory));
-		siteDAO.EditSite(id, site);
+		if (!siteDAO.EditSite(id, site)) {
+			return Response.serverError().build();
+		} return Response.ok().build();
 		
 	}
 	
 	@POST
 	@Path("/delete/")
-	public void deleteSite(@QueryParam("id") int id) {
-		siteDAO.DeleteSite(id);
+	public Response deleteSite(@QueryParam("id") int id) {
+		if (!siteDAO.DeleteSite(id)) {
+			return Response.serverError().build();
+		} return Response.ok().build();
 	}
 	
 }

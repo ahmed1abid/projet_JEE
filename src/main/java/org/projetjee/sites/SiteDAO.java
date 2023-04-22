@@ -8,10 +8,10 @@ public interface SiteDAO {
 	
 	public ArrayList<Site> findByName(String searchText);
 	
-	public void CreateSite(Site new_site);
+	public boolean CreateSite(Site new_site) throws SiteAlreadyExistsException;
 	
-	public void EditSite(int id, Site site);
+	public boolean EditSite(int id, Site site);
 	
-	public void DeleteSite(int id);
+	public boolean DeleteSite(int id);
 
 }

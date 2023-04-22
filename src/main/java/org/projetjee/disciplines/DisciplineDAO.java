@@ -8,10 +8,10 @@ public interface DisciplineDAO {
 	
 	public ArrayList<Discipline> findByName(String searchText);
 	
-	public void CreateDiscipline(Discipline new_discipline);
+	public boolean CreateDiscipline(Discipline new_discipline);
 	
-	public void EditDiscipline(String name, Boolean new_flag);
+	public boolean EditDiscipline(String name, Boolean new_flag);
 	
-	public void DeleteDiscipline(String name);
+	public boolean DeleteDiscipline(String name);
 
 }
