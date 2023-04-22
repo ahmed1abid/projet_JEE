@@ -53,12 +53,12 @@ public class AthleteDAOImpl implements AthleteDAO{
 	}
 
 	@Override
-	public boolean Import(List<String[]> rows) throws NotEnoughRowsException {
+	public boolean Import(List<String[]> rows) throws NotEnoughColumnsException {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
-			for (String[] row : rows) {
-				if (row.length != 6) {
-					throw new NotEnoughRowsException("File does not contain enough rows");
+			for (int i=0; i<rows.size(); i++) {
+				if (rows.get(i).length != 6) {
+					throw new NotEnoughColumnsException(String.format("File does not contain enough colums at line %d", i+2));
 				}
 			}
 			conn.setAutoCommit(false);

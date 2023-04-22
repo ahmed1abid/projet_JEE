@@ -1,16 +1,16 @@
 package org.projetjee.athletes;
 
-public class NotEnoughRowsException extends Exception{
+public class NotEnoughColumnsException extends Exception{
 	
 	private String message;
 	
-	public NotEnoughRowsException(String message) {
+	public NotEnoughColumnsException(String message) {
 		super(message);
 		this.message = message;
 	}
 	
 	public String toString() {
-		return "NotEnoughRowsException: " + this.message;
+		return "NotEnoughColumnsException: " + this.message;
 	}
 	
 	public String getMessage() {

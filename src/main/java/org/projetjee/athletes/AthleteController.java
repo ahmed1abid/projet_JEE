@@ -71,7 +71,7 @@ public class AthleteController {
 		} catch (IOException | CsvException e) {
 			e.printStackTrace();
 			return Response.status(422).build();	// Can't process uploaded file
-		} catch (NotEnoughRowsException e) {
+		} catch (NotEnoughColumnsException e) {
 			e.printStackTrace();
 			return Response.status(422, e.getMessage()).build();
 		} catch (OutOfMemoryError e) {
