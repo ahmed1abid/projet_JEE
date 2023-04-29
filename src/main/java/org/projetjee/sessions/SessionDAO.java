@@ -9,9 +9,9 @@ public ArrayList<Session> findByAll();
 	
 	public ArrayList<Session> findByCode(String searchText);
 	
-	public boolean CreateSession(Session new_session);
+	public boolean CreateSession(Session new_session) throws TimeOverlapException;
 	
-	public boolean EditSession(String code, Session session);
+	public boolean EditSession(String code, Session session) throws TimeOverlapException;
 	
 	public boolean DeleteSession(String code);
 

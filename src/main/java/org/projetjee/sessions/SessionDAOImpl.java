@@ -4,7 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.sql.PreparedStatement;
+
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import org.projetjee.DBManager;
 
@@ -59,54 +64,103 @@ public class SessionDAOImpl implements SessionDAO{
 	}
 
 	@Override
-	public boolean CreateSession(Session new_session) {
+	public boolean CreateSession(Session new_session) throws TimeOverlapException {
 		Connection conn = DBManager.getInstance().getConnection();
 		
-		// if not time overlap
-		try {
-			String query_base = "insert into session values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement pstatement = conn.prepareStatement(query_base);
-			pstatement.setString(1, new_session.getCode());
-			pstatement.setDate(2, new_session.getDate());
-			pstatement.setTime(3, new_session.getStart_time());
-			pstatement.setTime(4, new_session.getEnd_time());
-			pstatement.setString(5, new_session.getDiscipline());
-			pstatement.setInt(6, new_session.getSite_id());
-			pstatement.setString(7, new_session.getDescription());
-			pstatement.setString(8, new_session.getType());
-			pstatement.setString(9, new_session.getCategory());
-			pstatement.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			System.out.println(e);
-			return false;
+		Time nearest_available_time = checkTimeOverlap(conn, new_session.getDiscipline(), new_session.getStart_time());
+		if (nearest_available_time == null) {
+			try {
+				String query_base = "insert into session values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				PreparedStatement pstatement = conn.prepareStatement(query_base);
+				pstatement.setString(1, new_session.getCode());
+				pstatement.setDate(2, new_session.getDate());
+				pstatement.setTime(3, new_session.getStart_time());
+				pstatement.setTime(4, new_session.getEnd_time());
+				pstatement.setString(5, new_session.getDiscipline());
+				pstatement.setInt(6, new_session.getSite_id());
+				pstatement.setString(7, new_session.getDescription());
+				pstatement.setString(8, new_session.getType());
+				pstatement.setString(9, new_session.getCategory());
+				pstatement.executeUpdate();
+				return true;
+			} catch (SQLException e) {
+				System.out.println(e);
+				return false;
+			}
 		}
-		
+		throw new TimeOverlapException("Proposer de démarrer la session à " + nearest_available_time.toString());
+	}
+	
+	private Time checkTimeOverlap(Connection conn, String discipline, Time start_time) {
+		try {
+			ResultSet rs = conn.createStatement().executeQuery(String.format("select end_time from session group by end_time desc "
+					+ "having discipline='%s'", discipline));
+			if (rs.next()) {
+				LocalTime latest_end_time = rs.getTime("end_time").toLocalTime();
+				LocalTime user_start_time = start_time.toLocalTime();
+				if (latest_end_time.until(user_start_time, ChronoUnit.HOURS) < 1) {
+					return Time.valueOf(latest_end_time.plusHours(1));	// nearest available time
+				}
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
-	public boolean EditSession(String code, Session session) {
+	public boolean EditSession(String code, Session session) throws TimeOverlapException {
 		Connection conn = DBManager.getInstance().getConnection();
-		try {
-			String query_base = "update session set date=?, start_time=?, end_time=?, discipline=?, "
-					+ "idSite=?, description=?, type=?, category=? where code=?";
-			PreparedStatement pstatement = conn.prepareStatement(query_base);
-			pstatement.setDate(1, session.getDate());
-			pstatement.setTime(2, session.getStart_time());
-			pstatement.setTime(3, session.getEnd_time());
-			pstatement.setString(4, session.getDiscipline());
-			pstatement.setInt(5, session.getSite_id());
-			pstatement.setString(6, session.getDescription());
-			pstatement.setString(7, session.getType());
-			pstatement.setString(8, session.getCategory());
-			pstatement.setString(9, code);
-			pstatement.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			System.out.println(e);
-			return false;
-		}
 		
+		String[] sessionsToExclude = new String[] {code};
+		Time nearest_available_time = checkTimeOverlapExclude(conn, session.getDiscipline(), session.getStart_time(), sessionsToExclude);
+		if (nearest_available_time == null) {
+			try {
+				String query_base = "update session set date=?, start_time=?, end_time=?, discipline=?, "
+						+ "idSite=?, description=?, type=?, category=? where code=?";
+				PreparedStatement pstatement = conn.prepareStatement(query_base);
+				pstatement.setDate(1, session.getDate());
+				pstatement.setTime(2, session.getStart_time());
+				pstatement.setTime(3, session.getEnd_time());
+				pstatement.setString(4, session.getDiscipline());
+				pstatement.setInt(5, session.getSite_id());
+				pstatement.setString(6, session.getDescription());
+				pstatement.setString(7, session.getType());
+				pstatement.setString(8, session.getCategory());
+				pstatement.setString(9, code);
+				pstatement.executeUpdate();
+				return true;
+			} catch (SQLException e) {
+				System.out.println(e);
+				return false;
+			}
+		} throw new TimeOverlapException("Proposer de démarrer la session à " + nearest_available_time.toString());
+		
+		
+	}
+	
+	private Time checkTimeOverlapExclude(Connection conn, String discipline, Time start_time, String[] codes) {
+		String query = String.format("select end_time from session group by end_time desc "
+				+ "having discipline='%s'", discipline);
+		for (String code : codes) {
+			query += " and code != " + code;
+		}
+		try {
+			ResultSet rs = conn.createStatement().executeQuery(String.format("select end_time from session group by end_time desc "
+					+ "having discipline='%s'", discipline));
+			if (rs.next()) {
+				LocalTime latest_end_time = rs.getTime("end_time").toLocalTime();
+				LocalTime user_start_time = start_time.toLocalTime();
+				if (latest_end_time.until(user_start_time, ChronoUnit.HOURS) < 1) {
+					return Time.valueOf(latest_end_time.plusHours(1));	// nearest available time
+				}
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

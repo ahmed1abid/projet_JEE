@@ -50,11 +50,17 @@ public class SessionController {
 				SessionType.valueOf(type), SessionCategory.valueOf(category));
 		if (!session.validCode()) {
 			System.out.println("Session code must match '3 first letters of discipline + two-digits number'");
-			return Response.status(422).build();
+			return Response.status(422, "Session code must match '3 first letters of discipline + two-digits number'").build();
 		} else {
-			if (!sessionDAO.CreateSession(session)) {
-				return Response.serverError().build();
-			} return Response.ok().build();
+			try {
+				if (!sessionDAO.CreateSession(session)) {
+					return Response.serverError().build();
+				}
+			} catch (TimeOverlapException e) {
+				e.printStackTrace();
+				return Response.status(422, e.getMessage()).build();
+			}
+			return Response.ok().build();
 		}
 	}
 	
@@ -67,14 +73,19 @@ public class SessionController {
 							@FormParam("newCategory") String newCategory) {
 		Session session = new Session(code, newDate, newStart_time, newEnd_time, newDiscipline, newSite, newDescription,
 				SessionType.valueOf(newType), SessionCategory.valueOf(newCategory));
-		if (!sessionDAO.EditSession(code, session)) {
-			return Response.serverError().build();
+		try {
+			if (!sessionDAO.EditSession(code, session)) {
+				return Response.serverError().build();
+			}
+		} catch (TimeOverlapException e) {
+			e.printStackTrace();
+			return Response.status(422, e.getMessage()).build();
 		} return Response.ok().build();		
 	}
 	
 	@POST
 	@Path("/delete/")
-	public Response deleteSite(@QueryParam("code") String code) {
+	public Response deleteSession(@QueryParam("code") String code) {
 		if (!sessionDAO.DeleteSession(code)) {
 			return Response.serverError().build();
 		} return Response.ok().build();

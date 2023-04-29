@@ -57,7 +57,7 @@ public class DisciplineController {
 	
 	@POST
 	@Path("/delete/")
-	public Response deleteSite(@QueryParam("name") String name) {
+	public Response deleteDiscipline(@QueryParam("name") String name) {
 		if (!disciplineDAO.DeleteDiscipline(name)) {
 			return Response.serverError().build();
 		} return Response.ok().build();
