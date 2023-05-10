@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Date;
 import java.sql.Time;
 import java.sql.PreparedStatement;
 
@@ -67,8 +68,9 @@ public class SessionDAOImpl implements SessionDAO{
 	public boolean CreateSession(Session new_session) throws TimeOverlapException {
 		Connection conn = DBManager.getInstance().getConnection();
 		
-		Time nearest_available_time = checkTimeOverlap(conn, new_session.getDiscipline(), new_session.getStart_time());
-		if (nearest_available_time == null) {
+		Time start_time_suggestion = checkTimeOverlap(conn, new_session.getDiscipline(),
+				new_session.getSite_name(), new_session.getDate(), new_session.getStart_time());
+		if (start_time_suggestion == null) {	// start time specified by the user is valid
 			try {
 				String query_base = "insert into session values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement pstatement = conn.prepareStatement(query_base);
@@ -88,18 +90,22 @@ public class SessionDAOImpl implements SessionDAO{
 				return false;
 			}
 		}
-		throw new TimeOverlapException("Proposer de démarrer la session à " + nearest_available_time.toString());
+		throw new TimeOverlapException("Proposer de démarrer la session à " + start_time_suggestion.toString());
 	}
 	
-	private Time checkTimeOverlap(Connection conn, String discipline, Time start_time) {
+	private Time checkTimeOverlap(Connection conn, String discipline, String site, Date date, Time start_time) {
 		try {
-			ResultSet rs = conn.createStatement().executeQuery(String.format("select end_time from session group by end_time desc "
-					+ "having discipline='%s'", discipline));
+			String query_base = String.format("select end_time from session "
+					+ "where idSite='%s' group by end_time desc "
+					+ "having discipline='%s' and date=?", site, discipline);
+			PreparedStatement pstatement = conn.prepareStatement(query_base);
+			pstatement.setDate(1, date);
+			ResultSet rs = pstatement.executeQuery();
 			if (rs.next()) {
 				LocalTime latest_end_time = rs.getTime("end_time").toLocalTime();
 				LocalTime user_start_time = start_time.toLocalTime();
 				if (latest_end_time.until(user_start_time, ChronoUnit.HOURS) < 1) {
-					return Time.valueOf(latest_end_time.plusHours(1));	// nearest available time
+					return Time.valueOf(latest_end_time.plusHours(1));	// suggestion
 				}
 				return null;
 			}
