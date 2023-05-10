@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="script.js"></script>
 </head>
-<body>
+<body onload="loadStat('api/discipline-management/disciplines')">
 	<header>
 		<h1>compétitions</h1>
 		<nav>
@@ -25,7 +25,7 @@
 		<section>
 			<h2>Statistiques par discipline</h2>
 			<!-- Tableau des statistiques par discipline -->
-			<table>
+			<table id="disciplinelist">
 				<thead>
 					<tr>
 						<th>Discipline</th>
