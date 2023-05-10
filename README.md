@@ -17,6 +17,7 @@ Membre 1 : Backend
     Implémentation des règles de gestion pour les sessions, en vérifiant les dates et en proposant des heures alternatives si nécessaire
     Mise en place de l'authentification avec Spring Security
     Import du fichier CSV des athlètes avec la librairie OpenCSV
+    get pour nombre de sessions, athlètes, et moyenne d'âge pour une discipline donné
 
 Membre 2 : Frontend
 
