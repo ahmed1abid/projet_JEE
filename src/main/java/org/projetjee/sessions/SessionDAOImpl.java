@@ -94,10 +94,13 @@ public class SessionDAOImpl implements SessionDAO{
 	}
 	
 	private Time checkTimeOverlap(Connection conn, String discipline, String site, Date date, Time start_time) {
+		
+		// Create query statement to retrieve sessions that
+		// have the same date, site and discipline with the new session
+		String query_base = String.format("select end_time from session "
+				+ "where idSite='%s' and date=? group by end_time desc "
+				+ "having discipline='%s'", site, discipline);
 		try {
-			String query_base = String.format("select end_time from session "
-					+ "where idSite='%s' group by end_time desc "
-					+ "having discipline='%s' and date=?", site, discipline);
 			PreparedStatement pstatement = conn.prepareStatement(query_base);
 			pstatement.setDate(1, date);
 			ResultSet rs = pstatement.executeQuery();
@@ -120,8 +123,9 @@ public class SessionDAOImpl implements SessionDAO{
 		Connection conn = DBManager.getInstance().getConnection();
 		
 		String[] sessionsToExclude = new String[] {code};
-		Time nearest_available_time = checkTimeOverlapExclude(conn, session.getDiscipline(), session.getStart_time(), sessionsToExclude);
-		if (nearest_available_time == null) {
+		Time start_time_suggestion = checkTimeOverlapExclude(conn, session.getDiscipline(),
+				session.getSite_name(), session.getDate(), session.getStart_time(), sessionsToExclude);
+		if (start_time_suggestion == null) {
 			try {
 				String query_base = "update session set date=?, start_time=?, end_time=?, discipline=?, "
 						+ "idSite=?, description=?, type=?, category=? where code=?";
@@ -141,20 +145,27 @@ public class SessionDAOImpl implements SessionDAO{
 				System.out.println(e);
 				return false;
 			}
-		} throw new TimeOverlapException("Proposer de démarrer la session à " + nearest_available_time.toString());
+		} throw new TimeOverlapException("Proposer de démarrer la session à " + start_time_suggestion.toString());
 		
 		
 	}
 	
-	private Time checkTimeOverlapExclude(Connection conn, String discipline, Time start_time, String[] codes) {
-		String query = String.format("select end_time from session group by end_time desc "
-				+ "having discipline='%s'", discipline);
+	private Time checkTimeOverlapExclude(Connection conn, String discipline,
+			String site, Date date, Time start_time, String[] codes) {
+		
+		// Create query statement to retrieve sessions that :
+		// 		- have the same date, site and discipline with the current session
+		// 		- except the current session
+		String query_base = String.format("select end_time from session "
+				+ "where idSite='%s' and date=? ", site);	// date will be set in a prepared statement
 		for (String code : codes) {
-			query += " and code != " + code;
+			query_base += " and code != " + code;
 		}
+		query_base += String.format("group by end_time desc having discipline='%s'", discipline);
 		try {
-			ResultSet rs = conn.createStatement().executeQuery(String.format("select end_time from session group by end_time desc "
-					+ "having discipline='%s'", discipline));
+			PreparedStatement pstatement = conn.prepareStatement(query_base);
+			pstatement.setDate(1, date);
+			ResultSet rs = pstatement.executeQuery();
 			if (rs.next()) {
 				LocalTime latest_end_time = rs.getTime("end_time").toLocalTime();
 				LocalTime user_start_time = start_time.toLocalTime();
