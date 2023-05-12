@@ -62,5 +62,15 @@ public class DisciplineController {
 			return Response.serverError().build();
 		} return Response.ok().build();
 	}
-
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/statistics/")
+	public String getStatistics(@QueryParam("discipline") String discipline) {
+		DisciplineStatistics stats = disciplineDAO.getStatistics(discipline);
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
+		String json = gson.toJson(stats);
+		return json;
+	}
 }

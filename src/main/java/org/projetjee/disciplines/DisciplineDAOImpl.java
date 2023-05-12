@@ -91,4 +91,38 @@ public class DisciplineDAOImpl implements DisciplineDAO {
 		
 	}
 
+	@SuppressWarnings("finally")
+	@Override
+	public DisciplineStatistics getStatistics(String name) {
+		DisciplineStatistics stats = new DisciplineStatistics(name);
+		Connection conn = DBManager.getInstance().getConnection();
+		String query;
+		ResultSet rs;
+		try {
+			Statement statement = conn.createStatement();
+			
+			query = "select count(*) from athlete where discipline_name='"+name+"'";
+			rs = statement.executeQuery(query);
+			if (rs.next())
+				stats.setNbAtheletes(rs.getInt(1));
+			
+			query = "select count(*) from session where discipline='"+name+"'";
+			rs = statement.executeQuery(query);
+			if (rs.next())
+				stats.setNbSessions(rs.getInt(1));
+			
+			query = "select round(avg(age)) from athlete_age AA, athlete A "
+					+ "where AA.first_name = A.first_name and "
+					+ "AA.last_name = A.last_name and A.discipline_name='"+name+"'";
+			rs = statement.executeQuery(query);
+			if (rs.next())
+				stats.setAverageAge(rs.getInt(1));
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			return stats;
+		}
+	}
+
 }

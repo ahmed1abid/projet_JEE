@@ -13,5 +13,7 @@ public interface DisciplineDAO {
 	public boolean EditDiscipline(String name, Boolean new_flag);
 	
 	public boolean DeleteDiscipline(String name);
+	
+	public DisciplineStatistics getStatistics(String name);
 
 }
