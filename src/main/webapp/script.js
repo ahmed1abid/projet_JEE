@@ -35,8 +35,8 @@ function process(disciplines) {
 		var tr = document.createElement("tr");
 		var td_nom = document.createElement("td");
 		td_nom.append(discipline.name);
-		var td_nbSession = document.createElement("td");
-		td_nbSession.append("10");
+		//var td_nbSession = document.createElement("td");
+		//td_nbSession.append("10");
 		
 		tr.appendChild(td_nom);
 		tr.appendChild(td_nbSession);
