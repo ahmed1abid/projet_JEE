@@ -1,8 +1,12 @@
 /**
  * 
  */
-async function loadStat(url){
-	const response = await fetch(url);
+
+function load(){
+	loadStat();
+}
+async function loadStat(){
+	const response = await fetch('api/discipline-management/disciplines');
 	try {
 		var disciplines = await response.json();
 		process(disciplines)
@@ -39,7 +43,9 @@ function process(disciplines) {
 		//td_nbSession.append("10");
 		
 		tr.appendChild(td_nom);
-		tr.appendChild(td_nbSession);
+		//tr.appendChild(td_nbSession);
 		table.appendChild(tr);
 	}
 }
+
+window.onload = load();

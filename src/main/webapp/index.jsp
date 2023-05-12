@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <jsp:include page="header.jsp" />
+<body>
+<script src="script.js"/>></script>
+<title>Statistiques</title>
+</body>
 <main>
 	<section>
 		<h2>Statistiques par discipline</h2>
