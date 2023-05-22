@@ -6,7 +6,8 @@ function load(){
 	loadStat();
 }
 async function loadStat(){
-	const response = await fetch('api/discipline-management/disciplines');
+	const response = await fetch('http://localhost:8080/projet_JEE/api/discipline-management/disciplines');
+	console.log(response);
 	try {
 		var disciplines = await response.json();
 		process(disciplines)
