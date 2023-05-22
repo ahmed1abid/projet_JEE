@@ -1,65 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<jsp:include page="includes/header.jsp" />
-<body>
-<script src="../script.js"/>></script>
-<title>Statistiques</title>
-</body>
-<main>
-	<section>
-		<h2>Statistiques par discipline</h2>
-		<!-- Tableau des statistiques par discipline -->
-		<table id="disciplinelist">
-			<thead>
-				<tr>
-					<th>Discipline</th>
-					<th>Nb sessions</th>
-					<th>Nb athlètes</th>
-					<th>Moyenne d'âge</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-				</tr>
-				<!-- Les autres lignes de données ici -->
-			</tbody>
-		</table>
-	</section>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+	<jsp:include page="includes/header.jsp" />
+	<script src="../resources/js/index.js"></script>
+	<title>Statistiques</title>
 
-	<section>
-		<h2>Statistiques par site</h2>
-		<!-- Tableau des statistiques par site -->
-		<table>
-			<thead>
-				<tr>
-					<th>Site</th>
-					<th>Nb sessions</th>
-					<th>Nb athlètes</th>
-					<th>Moyenne d'âge</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
+	<main>
+		<section>
+			<h2>Statistiques par discipline</h2>
+			<!-- Tableau des statistiques par discipline -->
+			<table class="table table-hover" id="disciplinelist">
+				<thead>
+					<tr>
+						<th scope="col">Discipline</th>
+						<th scope="col">Nb sessions</th>
+						<th scope="col">Nb athlÃ¨tes</th>
+						<th scope="col">Moyenne d'Ã¢ge</th>
+					</tr>
+				</thead>
+				<!-- tbody crÃ©e par le script -->
+			</table>
+		</section>
 
-				</tr>
-				<tr>
+		<section>
+			<h2>Statistiques par site</h2>
+			<!-- Tableau des statistiques par site -->
+			<table class=" table table-hover" id="sitelist">
+				<thead>
+					<tr>
+						<th scope="col">Site</th>
+						<th scope="col">Nb sessions</th>
+						<th scope="col">Nb athlÃ¨tes</th>
+						<th scope="col">Moyenne d'Ã¢ge</th>
+					</tr>
+				</thead>
+				<!-- tobdy crÃ©e par le script -->
+			</table>
+		</section>
 
-				</tr>
-				<!-- Les autres lignes de données ici -->
-			</tbody>
-		</table>
-	</section>
-
-	<section>
-		<h2>Liste des sessions</h2>
-		<!-- Liste des sessions avec pagination -->
-		<ul>
-			<li><a href="#">Session 1</a></li>
-			<li><a href="#">Session 2</a></li>
-			<li><a href="#">Session 3</a></li>
-			<li><a href="#">Session 4</a></li>
-			<li><a href="#">Session 5</a></li>
-			<!-- ... -->
-		</ul>
-</main>
-<jsp:include page="includes/footer.jsp" />
+		<section>
+			<h2>Liste des sessions</h2>
+			<!-- Liste des sessions avec pagination -->
+			<ul>
+				<li><a href="#">Session 1</a></li>
+				<li><a href="#">Session 2</a></li>
+				<li><a href="#">Session 3</a></li>
+				<li><a href="#">Session 4</a></li>
+				<li><a href="#">Session 5</a></li>
+				<!-- ... -->
+			</ul>
+	</main>
+	<jsp:include page="includes/footer.jsp" />
