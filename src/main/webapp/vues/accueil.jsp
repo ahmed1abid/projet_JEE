@@ -3,5 +3,5 @@
 	<title>Jeux Olympiques 2024 - Paris</title>
 
 	<main>
-		<a href="index.jsp">Retour </a></li>
+		<a href="index.jsp">Retour</a>
 	</main>

@@ -3,7 +3,6 @@ async function loadSites() {
     try {
         const sites = await sitesData.json();
         const siteList = document.getElementById("sitelist");
-        console.log(sites);
         let tbodySite = document.createElement("tbody");
         siteList.appendChild(tbodySite);
         
