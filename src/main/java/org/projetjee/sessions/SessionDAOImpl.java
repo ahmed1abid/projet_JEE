@@ -25,8 +25,8 @@ public class SessionDAOImpl implements SessionDAO{
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery("select code, date, start_time, "
 					+ "end_time, discipline.name as dsc_name, site.name as site_name, site.city as site_city, description, "
-					+ "type, session.category as ctgry from session, site, discipline"
-					+ "where session.idSite = site.idSite and session.discipline = discipline.name");
+					+ "type, session.category as ctgry from session join site on session.idSite=site.idSite join discipline "
+					+ "on session.discipline=discipline.name");
 			while ( rs.next() ) {
 				sessions.add(new Session(rs.getString("code"), rs.getDate("date"), rs.getTime("start_time"),
 						rs.getTime("end_time"), rs.getString("dsc_name"), rs.getString("site_name"),
@@ -34,7 +34,7 @@ public class SessionDAOImpl implements SessionDAO{
 						SessionType.valueOf(rs.getString("type")), SessionCategory.valueOf(rs.getString("ctgry"))));
 			}
 		} catch (SQLException e) {
-			System.out.println(e);
+			e.printStackTrace();
 		} finally {
 			return sessions;
 		}
@@ -49,8 +49,8 @@ public class SessionDAOImpl implements SessionDAO{
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery("select code, date, start_time, "
 					+ "end_time, discipline.name as dsc_name, site.name as site_name, site.city as site_city, description, "
-					+ "type, session.category as ctgry from session, site, discipline"
-					+ "where session.idSite = site.idSite and session.discipline = discipline.name and code='"+searchText+"'");
+					+ "type, session.category as ctgry from session join site on session.idSite=site.idSite join discipline "
+					+ "on session.discipline=discipline.name where code='"+searchText+"'");
 			if ( rs.next() ) {
 				sessions.add(new Session(rs.getString("code"), rs.getDate("date"), rs.getTime("start_time"),
 						rs.getTime("end_time"), rs.getString("dsc_name"), rs.getString("site_name"),
@@ -58,7 +58,7 @@ public class SessionDAOImpl implements SessionDAO{
 						SessionType.valueOf(rs.getString("type")), SessionCategory.valueOf(rs.getString("ctgry"))));
 			}
 		} catch (SQLException e) {
-			System.out.println(e);
+			e.printStackTrace();
 		} finally {
 			return sessions;
 		}
