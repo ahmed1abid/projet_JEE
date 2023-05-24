@@ -1,5 +1,5 @@
 async function loadSites() {
-    const sitesData = await fetch('http://localhost:8080/projet_JEE/api/site-management/sites');
+    const sitesData = await fetch('/projet_JEE/api/site-management/sites');
     try {
         const sites = await sitesData.json();
         const siteList = document.getElementById("sitelist");

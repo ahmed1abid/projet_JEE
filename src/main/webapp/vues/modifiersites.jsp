@@ -22,25 +22,25 @@
 					<option value="lieu_public">Lieu public</option>
 					<option value="centre_aquatique">Centre aquatique</option>
 				</select>
-				<button id="btnAddSite" type="submit">Ajouter</button>
+				<button type="submit">Ajouter</button>
 			</form>
 		</section>
 		
 		<section>
 			<h2>Modifier un site</h2>
 			<form id="editSiteForm">
-				<label for="siteId">ID du site :</label>
-				<input type="text" id="siteId" name="siteId" required>
+				<label for="editId">ID du site :</label>
+				<input type="text" id="editId" name="editId" required>
 				<label for="newName">Nouveau nom :</label>
 				<input type="text" id="newName" name="newName" required>
 				<label for="newCity">Nouvelle ville :</label>
 				<input type="text" id="newCity" name="newCity" required>
 				<label for="newCategory">Nouvelle catégorie :</label>
 				<select id="newCategory" name="newCategory" required>
-					<option value="stadium">Stade</option>
-					<option value="performance_hall">Salle de spectacle</option>
-					<option value="public_place">Lieu public</option>
-					<option value="aquatic_center">Centre aquatique</option>
+					<option value="stade">Stade</option>
+					<option value="salle_de_spectacle">Salle de spectacle</option>
+					<option value="lieu_public">Lieu public</option>
+					<option value="centre_aquatique">Centre aquatique</option>
 				</select>
 				<button type="submit">Modifier</button>
 			</form>
