@@ -71,7 +71,7 @@ public class UserServlet extends HttpServlet {
 
 	        if (username != null && password != null) {
 	            User newUser = new User(username, password);
-	            userDAO.createUser(newUser);
+	            userDAO.CreateUser(newUser);
 	            response.sendRedirect("login.jsp"); // Redirige vers la page de connexion après la création du compte
 	        } else {
 	            response.setStatus(400);
@@ -83,7 +83,7 @@ public class UserServlet extends HttpServlet {
 	        String deleteUsername = request.getParameter("deleteUsername");
 
 	        if (deleteUsername != null) {
-	            boolean deleted = userDAO.deleteUser(deleteUsername);
+	            boolean deleted = userDAO.DeleteUser(deleteUsername);
 	            if (deleted) {
 	                response.sendRedirect("login.jsp"); // Redirige vers la page de connexion après la suppression de l'utilisateur
 	            } else {
