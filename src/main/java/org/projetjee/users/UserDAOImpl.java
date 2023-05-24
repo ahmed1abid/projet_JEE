@@ -15,10 +15,10 @@ public class UserDAOImpl implements UserDAO {
 
 	@SuppressWarnings("finally")
 	@Override
-	public ArrayList<User> findByUserName(String userName, String password) {
+	public ArrayList<User> findByUserName(String userName, String password) throws NoSuchAlgorithmException {
 		ArrayList<User> users = new ArrayList<User> ();
 		Connection conn = DBManager.getInstance().getConnection();
-		String query = String.format("select * from user where username='%s' and password='%s'", userName, password);
+		String query = String.format("select * from user where username='%s' and password='%s'", userName, this.doHash(password));
 		try {
 			ResultSet rs = conn.createStatement().executeQuery(query);
 			if (rs.next()) {

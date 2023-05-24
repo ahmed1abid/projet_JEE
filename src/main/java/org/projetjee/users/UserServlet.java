@@ -28,19 +28,39 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String pathInfo = request.getPathInfo();
+		if (pathInfo.equals("/delete"))
+			this.handleUserDeletion(request, response);
+		else if (pathInfo.equals("/login"))
+			this.handleLogin(request, response);
+		else if (pathInfo.equals("/registration"))
+			this.handleRegistration(request, response);
+		else {
+			response.setStatus(404);
+			response.getWriter().write("RESSOURCE NOT FOUND");
+		}
+	}
+	
 	private void doGetUserByAccount(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		ArrayList<User> users;
-		if (username != null && password != null) 
-			users = userDAO.findByUserName(username, password);
+		if (username != null && password != null)
+			try {
+				users = userDAO.findByUserName(username, password);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+				response.setStatus(500);
+				users = new ArrayList<User>();
+			}
 		else 
 			users = new ArrayList<User>();
 		
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.create();
-		String json =A gson.toJson(users);
+		String json = gson.toJson(users);
 		
 		response.setContentType("application/json");
 		response.setStatus(200);
@@ -52,7 +72,13 @@ public class UserServlet extends HttpServlet {
 	        ArrayList<User> users;
 
 	        if (username != null && password != null) {
-	            users = userDAO.findByUserName(username, password);
+	            try {
+					users = userDAO.findByUserName(username, password);
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+					response.setStatus(500);
+					users = new ArrayList<User>();
+				}
 	        } else {
 	            users = new ArrayList<User>();
 	        }
@@ -71,7 +97,7 @@ public class UserServlet extends HttpServlet {
 	        String password = request.getParameter("password");
 	        String role = request.getParameter("role");
 
-	        if (username != null && password != null) {
+	        if (username != null && password != null && role != null) {
 	            User newUser = new User(username, password, UserRole.valueOf(role));
 	            try {
 	            	if (!userDAO.CreateUser(newUser)) {

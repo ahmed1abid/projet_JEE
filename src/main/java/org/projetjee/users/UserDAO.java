@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public interface UserDAO {
 	
-	public ArrayList<User> findByUserName(String userName, String password);
+	public ArrayList<User> findByUserName(String userName, String password) throws NoSuchAlgorithmException;
 	
 	public boolean CreateUser(User user) throws NoSuchAlgorithmException;
 	
