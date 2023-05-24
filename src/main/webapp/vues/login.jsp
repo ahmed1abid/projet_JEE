@@ -6,11 +6,11 @@
     <title>Connexion</title>
 </head>
 <body>
-    <%@ include file="header.jsp" %>
+	<jsp:include page="includes/header.jsp" />
 
     <h1>Connexion</h1>
 
-    <form action="LoginServlet" method="post">
+    <form action="UserServlet" method="post">
         <label for="username">Nom d'utilisateur :</label>
         <input type="text" id="username" name="username" required><br>
 
@@ -19,7 +19,19 @@
 
         <input type="submit" value="Se connecter">
     </form>
+    
+    <form action="UserServlet" method="post">
+        <input type="hidden" name="action" value="register">
+        <input type="submit" value="Créer un compte">
+    </form>
+    
+    <form action="UserServlet" method="post">
+        <input type="hidden" name="action" value="delete">
+        <label for="deleteUsername">Supprimer un utilisateur :</label>
+        <input type="text" id="deleteUsername" name="deleteUsername" required><br>
+        <input type="submit" value="Supprimer">
+    </form>
 
-    <%@ include file="footer.jsp" %>
-</body>
+	<jsp:include page="includes/footer.jsp" />
+	</body>
 </html>
