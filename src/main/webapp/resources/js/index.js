@@ -7,7 +7,6 @@ async function loadStat(){
 	try {
 		const disciplines = await disciplinesData.json();
 		const sites = await sitesData.json();
-		process(disciplines, sites);
 
 		// Disciplines
 		const disciplineList = document.getElementById("disciplinelist");
