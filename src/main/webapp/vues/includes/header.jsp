@@ -17,9 +17,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="accueil.jsp">Accueil</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="competitions.jsp">Competitions</a>
-				</li>
+			
 				<li class="nav-item">
 					<a class="nav-link" href="sites.jsp">Sites</a>
 				</li>
