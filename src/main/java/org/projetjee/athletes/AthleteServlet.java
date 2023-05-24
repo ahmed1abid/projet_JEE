@@ -30,7 +30,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 
-@WebServlet("/athlete-management/*")
+@WebServlet("/athlete-management")
 public class AthleteServlet extends HttpServlet{
 	
 	private AthleteDAO athleteDAO = new AthleteDAOImpl();
