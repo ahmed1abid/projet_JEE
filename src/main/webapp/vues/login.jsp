@@ -25,6 +25,10 @@
                                 <label for="password">Mot de passe :</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
+                              <div class="form-group">
+                                <label for="role">Rôle :</label>
+                                <input type="text" class="form-control" id="role" name="role" required>
+                            </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Se connecter</button>
                             </div>
