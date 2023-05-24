@@ -2,7 +2,7 @@
  * 
  */
 async function loadDisciplines(){
-	const disciplinesData = await fetch('http://localhost:8080/projet_JEE/api/discipline-management/disciplines');
+	const disciplinesData = await fetch('/projet_JEE/api/discipline-management/disciplines');
 	try {
 		const disciplines = await disciplinesData.json();
 		const disciplineList = document.getElementById("disciplinelist");

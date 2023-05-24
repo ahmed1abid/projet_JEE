@@ -1,4 +1,3 @@
-
 // Soumettre le formulaire d'ajout de site
 document.getElementById('addSiteForm').addEventListener('submit', function (event) {
     event.preventDefault();
@@ -17,7 +16,6 @@ document.getElementById('addSiteForm').addEventListener('submit', function (even
         .then(response => {
             if (response.ok) {
                 form.reset();
-                loadSites();
             } else {
                 console.error('Erreur lors de la création du site');
             }
@@ -29,12 +27,12 @@ document.getElementById('addSiteForm').addEventListener('submit', function (even
 document.getElementById('editSiteForm').addEventListener('submit', function (event) {
     event.preventDefault();
     const form = event.target;
-    const siteId = form.elements['siteId'].value;
+    const editId = form.elements['editId'].value;
     const newName = form.elements['newName'].value;
     const newCity = form.elements['newCity'].value;
     const newCategory = form.elements['newCategory'].value;
 
-    fetch(`/projet_JEE/api/site-management/edit?id=${encodeURIComponent(siteId)}`, {
+    fetch(`/projet_JEE/api/site-management/edit?id=${encodeURIComponent(editId)}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -44,7 +42,6 @@ document.getElementById('editSiteForm').addEventListener('submit', function (eve
         .then(response => {
             if (response.ok) {
                 form.reset();
-                loadSites();
             } else {
                 console.error('Erreur lors de la modification du site');
             }
@@ -59,12 +56,11 @@ document.getElementById('deleteSiteForm').addEventListener('submit', function (e
     const siteId = form.elements['siteId'].value;
 
     fetch(`/projet_JEE/api/site-management/delete?id=${encodeURIComponent(siteId)}`, {
-        method: 'POST'
+        method: 'POST',
     })
         .then(response => {
             if (response.ok) {
                 form.reset();
-                loadSites();
             } else {
                 console.error('Erreur lors de la suppression du site');
             }
