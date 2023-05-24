@@ -16,6 +16,9 @@
 
         <label for="password">Mot de passe :</label>
         <input type="password" id="password" name="password" required><br>
+        
+        <label for="role">Rôle :</label>
+        <input type="text" id="role" name="role" required><br>
 
         <input type="submit" value="Se connecter">
     </form>

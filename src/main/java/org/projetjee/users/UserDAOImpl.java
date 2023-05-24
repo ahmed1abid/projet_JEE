@@ -34,9 +34,6 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public boolean CreateUser(User user) throws NoSuchAlgorithmException {
-		System.out.print(doHash(user.getPassword()));
-		return true;
-		/*
 		Connection conn = DBManager.getInstance().getConnection();
 		String query = String.format("select into user values(%s, %s, %s)", user.getUserName(),
 				this.doHash(user.getPassword()), user.getRole().toString());
@@ -46,7 +43,7 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}*/
+		}
 	}
 	
 	private String doHash(String message) throws NoSuchAlgorithmException {

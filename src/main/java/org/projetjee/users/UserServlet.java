@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -68,11 +69,23 @@ public class UserServlet extends HttpServlet {
 	    private void handleRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	        String username = request.getParameter("username");
 	        String password = request.getParameter("password");
+	        String role = request.getParameter("role");
 
 	        if (username != null && password != null) {
-	            User newUser = new User(username, password);
-	            userDAO.CreateUser(newUser);
-	            response.sendRedirect("login.jsp"); // Redirige vers la page de connexion après la création du compte
+	            User newUser = new User(username, password, UserRole.valueOf(role));
+	            try {
+	            	if (!userDAO.CreateUser(newUser)) {
+	            		response.setStatus(422);
+	            		response.getWriter().write("This user name is already taken");
+	            	}
+	            	else {
+	            		response.setStatus(422);
+		            	response.sendRedirect("login.jsp"); // Redirige vers la page de connexion après la création du compte
+	            	}
+	            } catch (NoSuchAlgorithmException e) {
+	            	e.printStackTrace();
+	            	response.setStatus(500);
+	            }
 	        } else {
 	            response.setStatus(400);
 	            response.getWriter().write("Invalid username or password");
@@ -83,11 +96,10 @@ public class UserServlet extends HttpServlet {
 	        String deleteUsername = request.getParameter("deleteUsername");
 
 	        if (deleteUsername != null) {
-	            boolean deleted = userDAO.DeleteUser(deleteUsername);
-	            if (deleted) {
+	            if (userDAO.DeleteUser(deleteUsername)) {
 	                response.sendRedirect("login.jsp"); // Redirige vers la page de connexion après la suppression de l'utilisateur
 	            } else {
-	                response.setStatus(400);
+	                response.setStatus(500);
 	                response.getWriter().write("User deletion failed");
 	            }
 	        } else {
