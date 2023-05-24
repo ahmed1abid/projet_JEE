@@ -17,12 +17,12 @@
 				<input type="text" id="city" name="city" required>
 				<label for="category">Catégorie :</label>
 				<select id="category" name="category" required>
-					<option value="stadium">Stade</option>
-					<option value="performance_hall">Salle de spectacle</option>
-					<option value="public_place">Lieu public</option>
-					<option value="aquatic_center">Centre aquatique</option>
+					<option value="stade">Stade</option>
+					<option value="salle_de_spectacle">Salle de spectacle</option>
+					<option value="lieu_public">Lieu public</option>
+					<option value="centre_aquatique">Centre aquatique</option>
 				</select>
-				<button type="submit">Ajouter</button>
+				<button id="btnAddSite" type="submit">Ajouter</button>
 			</form>
 		</section>
 		
@@ -62,7 +62,7 @@
 		</nav>
 	</main>
 
-	<!-- <script>
+	<script src="../resources/js/modifiersites.js">
 
-	</script> -->
+	</script>
 <jsp:include page="includes/footer.jsp" />
