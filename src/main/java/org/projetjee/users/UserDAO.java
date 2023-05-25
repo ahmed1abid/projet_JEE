@@ -9,6 +9,6 @@ public interface UserDAO {
 	
 	public boolean CreateUser(User user) throws NoSuchAlgorithmException;
 	
-	public boolean DeleteUser(String username);
+	public boolean DeleteUser(String username, String password) throws NoSuchAlgorithmException;
 
 }

@@ -106,7 +106,7 @@ public class UserServlet extends HttpServlet {
 	            	}
 	            	else {
 	            		response.setStatus(422);
-		            	response.sendRedirect("login.jsp"); // Redirige vers la page de connexion après la création du compte
+		            	response.sendRedirect("/projet_JEE/vues/login.jsp"); // Redirige vers la page de connexion après la création du compte
 	            	}
 	            } catch (NoSuchAlgorithmException e) {
 	            	e.printStackTrace();
@@ -120,14 +120,21 @@ public class UserServlet extends HttpServlet {
 
 	    private void handleUserDeletion(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	        String deleteUsername = request.getParameter("deleteUsername");
+	        String deletePassword = request.getParameter("deletePassword");
 
 	        if (deleteUsername != null) {
-	            if (userDAO.DeleteUser(deleteUsername)) {
-	                response.sendRedirect("login.jsp"); // Redirige vers la page de connexion après la suppression de l'utilisateur
-	            } else {
-	                response.setStatus(500);
+	        	try {
+	        		if (userDAO.DeleteUser(deleteUsername, deletePassword)) {
+		                response.sendRedirect("/projet_JEE/vues/login.jsp"); // Redirige vers la page de connexion après la suppression de l'utilisateur
+		            } else {
+		                response.setStatus(500);
+		                response.getWriter().write("User deletion failed");
+		            }
+	        	} catch (NoSuchAlgorithmException e) {
+	        		response.setStatus(500);
 	                response.getWriter().write("User deletion failed");
-	            }
+	        	}
+	            
 	        } else {
 	            response.setStatus(400);
 	            response.getWriter().write("Invalid username");
