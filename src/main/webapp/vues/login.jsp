@@ -25,25 +25,38 @@
                                 <label for="password">Mot de passe :</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
-                              <div class="form-group">
-                                <label for="role">Rôle :</label>
-                                <input type="text" class="form-control" id="role" name="role" required>
-                            </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Se connecter</button>
                             </div>
                         </form>
                         <form action="/projet_JEE/api/user-management/registration" method="post">
                             <input type="hidden" name="action" value="register">
-                            <div class="text-center mt-3">
+                            <div class="form-group">
+                                <label for="registerUsername">Nom d'utilisateur :</label>
+                                <input type="text" class="form-control" id="registerUsername" name="registerUsername" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerPassword">Mot de passe :</label>
+                                <input type="password" class="form-control" id="registerPassword" name="registerPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerRole">Rôle :</label>
+                                <input type="text" class="form-control" id="registerRole" name="registerRole" required>
+                            </div>
+                            <div class="text-center">
                                 <button type="submit" class="btn btn-secondary">Créer un compte</button>
                             </div>
                         </form>
                         <form action="/projet_JEE/api/user-management/delete" method="post">
                             <input type="hidden" name="action" value="delete">
                             <div class="form-group mt-3">
-                                <label for="deleteUsername">Supprimer un utilisateur :</label>
+                                <label for="deleteUsername">Nom d'utilisateur :</label>
                                 <input type="text" class="form-control" id="deleteUsername" name="deleteUsername"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="deletePassword">Mot de passe :</label>
+                                <input type="password" class="form-control" id="deletePassword" name="deletePassword"
                                     required>
                             </div>
                             <div class="text-center">
