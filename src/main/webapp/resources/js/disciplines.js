@@ -14,7 +14,11 @@ async function loadDisciplines(){
 			let td_name = document.createElement("td");
 			td_name.append(discipline.name);
 			let td_flag = document.createElement("td");
-			td_flag.append(discipline.flag);
+			if (discipline.flag) {
+				td_flag.append("Oui");
+			} else {
+				td_flag.append("Non");
+			}
 			
 			tr.append(td_name, td_flag);
 			tbodyDiscipline.append(tr);

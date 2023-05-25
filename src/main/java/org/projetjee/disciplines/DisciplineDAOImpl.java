@@ -48,11 +48,12 @@ public class DisciplineDAOImpl implements DisciplineDAO {
 
 	@Override
 	public boolean CreateDiscipline(Discipline new_discipline) {
+		System.out.println("test");
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
 			
 			Statement statement = conn.createStatement();
-			statement.executeUpdate(String.format("insert into discipline values('%s', '%s')",
+			statement.executeUpdate(String.format("insert into discipline values('%s', %b)",
 					new_discipline.getName(), new_discipline.getFlag()));
 			return true;
 		} catch (SQLException e) {
@@ -67,7 +68,7 @@ public class DisciplineDAOImpl implements DisciplineDAO {
 		Connection conn = DBManager.getInstance().getConnection();
 		try {
 			Statement statement = conn.createStatement();
-			statement.executeUpdate(String.format("update discipline set flag='%d' where name='%s'",
+			statement.executeUpdate(String.format("update discipline set flag=%b where name='%s'",
 					new_flag, name));
 			return true;
 		} catch (SQLException e) {

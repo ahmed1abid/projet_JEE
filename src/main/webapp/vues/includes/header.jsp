@@ -28,7 +28,7 @@
 					<a class="nav-link" href="sessions.jsp">Sessions</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="athletes.jsp">Athletes</a>
+					<a class="nav-link" href="athletes.jsp">Athlètes</a>
 				</li>
 			</ul>
 			<a class="btn btn-outline-success" href="login.jsp" role="button">Se connecter</a>
