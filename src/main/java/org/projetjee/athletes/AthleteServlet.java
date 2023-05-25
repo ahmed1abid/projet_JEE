@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -17,20 +16,13 @@ import com.opencsv.exceptions.CsvException;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 @WebServlet("/athlete-management/*")
 @MultipartConfig(
@@ -55,8 +47,7 @@ public class AthleteServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
 		if (pathInfo.equals("/upload"))
-			System.out.println("...");
-			//this.handleUpload(request, response);
+			this.handleUpload(request, response);
 		else if (pathInfo.equals("/delete"))
 			this.doDeleteAthlete(request, response);
 		else {
