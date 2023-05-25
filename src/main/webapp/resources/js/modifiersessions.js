@@ -20,7 +20,7 @@ document.getElementById('addSessionForm').addEventListener('submit', function (e
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `code=${encodeURIComponent(code)}&date=${encodeURIComponent(date)}&category=${encodeURIComponent(category)}`
+        body: `code=${encodeURIComponent(code)}&date=${encodeURIComponent(date)}&start_time=${start_time}&end_time=${end_time}&discipline=${discipline}&site=${site}&description=${description}&type=${type}&category=${encodeURIComponent(category)}`
     })
         .then(response => {
             if (response.ok) {
@@ -51,7 +51,7 @@ document.getElementById('editSiteForm').addEventListener('submit', function (eve
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `id=${encodeURIComponent(editId)}&newName=${encodeURIComponent(newName)}&newCity=${encodeURIComponent(newCity)}&newCategory=${encodeURIComponent(newCategory)}`
+        body: `code=${encodeURIComponent(code)}&date=${encodeURIComponent(date)}&start_time=${start_time}&end_time=${end_time}&discipline=${discipline}&site=${site}&description=${description}&type=${type}&category=${encodeURIComponent(category)}`
     })
         .then(response => {
             if (response.ok) {
