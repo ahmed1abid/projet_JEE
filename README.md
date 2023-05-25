@@ -1,5 +1,20 @@
 #Projet_JEE
 
+#informations importantes  : 
+
+groupe 9 (Laurent, Ahmed, Axel)
+
+l'url d'accueil : http://localhost:8080/projet_JEE/vues/index.jsp
+
+les comptes à utiliser : 
+ - admin : ndc : admin   ||    password : admin 
+ - gesC : ndc : test1    ||    password : test1
+ - gesS : ndc : test2    ||    password : test2
+ 
+
+
+
+
 ##Distribution de tâches 
 
 Membre 1 : Backend
