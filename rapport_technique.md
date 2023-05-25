@@ -47,7 +47,7 @@ Le site offre les fonctionnalités suivantes :
    - Gestion des disciplines : La page disciplines.jsp permet d'ajouter, modifier et supprimer des disciplines.
    - Gestion des sessions : La page sessions.jsp permet d'ajouter, modifier et supprimer des sessions.
    - Gestion des sites : La page sites.jsp permet d'ajouter, modifier et supprimer des sites.
-   - Authentification des utilisateurs : La page connexion.jsp permet aux utilisateurs de se connecter avec leurs identifiants.
+   - Authentification des utilisateurs : La page login.jsp permet aux utilisateurs de se connecter avec leurs identifiants.
 
 ## 4. Conclusion
 
