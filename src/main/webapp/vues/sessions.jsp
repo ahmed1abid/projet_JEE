@@ -10,7 +10,7 @@
 	<main>
 		<section>
 			<h2>Liste des sessions</h2>
-			<a class="btn btn-outline-primary" href="modifiersessions.jsp" role="button">Modifier les sites</a>
+			<a class="btn btn-outline-primary" href="modifiersessions.jsp" role="button">Modifier les sessions</a>
 			<!-- Conteneur pour afficher les sessions -->
 			<div id="sessionsContainer">
 				<table class="table table-hover" id="sessionlist">
