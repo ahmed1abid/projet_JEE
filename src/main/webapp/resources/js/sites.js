@@ -15,7 +15,22 @@ async function loadSites() {
             let td_city = document.createElement("td");
             td_city.append(site.city);
             let td_category = document.createElement("td");
-            td_category.append(site.category);
+            switch(site.category) {
+				case "stade":
+					td_category.append("Stade");
+					break;
+				case "salle_de_spectacle":
+					td_category.append("Salle de spectacle");
+					break;
+				case "lieu_public":
+					td_category.append("Lieu public");
+					break;
+				case "centre_aquatique":
+					td_category.append("Centre aquatique");
+					break;
+				default:
+					td_category.append("");
+			}
 
             tr.append(td_id, td_name, td_city, td_category);
             tbodySite.appendChild(tr);

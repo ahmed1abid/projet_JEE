@@ -29,12 +29,12 @@ document.getElementById('editDisciplineForm').addEventListener('submit', functio
     const disciplineName = form.elements['disciplineName'].value;
     const newFlag = form.elements['newFlag'].value;
 
-    fetch(`/projet_JEE/discipline-management/edit?name=${encodeURIComponent(disciplineName)}`, {
+    fetch(`/projet_JEE/discipline-management/edit`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `flag=${encodeURIComponent(newFlag)}`
+        body: `name=${encodeURIComponent(disciplineName)}&flag=${encodeURIComponent(newFlag)}`
     })
         .then(response => {
             if (response.ok) {
@@ -52,8 +52,12 @@ document.getElementById('deleteDisciplineForm').addEventListener('submit', funct
     const form = event.target;
     const disciplineName = form.elements['disciplineName'].value;
 
-    fetch(`/projet_JEE/discipline-management/delete?name=${encodeURIComponent(disciplineName)}`, {
-        method: 'POST'
+    fetch(`/projet_JEE/discipline-management/delete`, {
+        method: 'POST',
+        headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		body: `name=${encodeURIComponent(disciplineName)}`
     })
         .then(response => {
             if (response.ok) {
