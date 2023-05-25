@@ -34,7 +34,7 @@ document.getElementById('editDisciplineForm').addEventListener('submit', functio
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `name=${encodeURIComponent(disciplineName)}&new_flag=${encodeURIComponent(newFlag)}`
+        body: `flag=${encodeURIComponent(newFlag)}`
     })
         .then(response => {
             if (response.ok) {

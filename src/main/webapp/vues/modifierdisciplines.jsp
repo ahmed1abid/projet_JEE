@@ -7,10 +7,10 @@
 			<form id="addDisciplineForm">
 				<label for="name">Nom :</label>
 				<input type="text" id="name" name="name" required>
-				<label for="flag">Drapeau :</label>
+				<label for="flag">Paralympique? :</label>
 				<select id="flag" name="flag" required>
-					<option value="1">Actif</option>
-					<option value="0">Inactif</option>
+					<option value="1">Oui</option>
+					<option value="0">Non</option>
 				</select>
 				<button type="submit">Ajouter</button>
 			</form>
@@ -21,10 +21,10 @@
 			<form id="editDisciplineForm">
 				<label for="disciplineName">Nom de la discipline :</label>
 				<input type="text" id="disciplineName" name="disciplineName" required>
-				<label for="newFlag">Nouveau drapeau :</label>
+				<label for="newFlag">Paralympique? :</label>
 				<select id="newFlag" name="newFlag" required>
-					<option value="1">Actif</option>
-					<option value="0">Inactif</option>
+					<option value="1">Oui</option>
+					<option value="0">Non</option>
 				</select>
 				<button type="submit">Modifier</button>
 			</form>
