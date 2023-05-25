@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@WebServlet("/user-management")
+@WebServlet("/user-management/*")
 public class UserServlet extends HttpServlet {
 	
 	private UserDAO userDAO = new UserDAOImpl();
