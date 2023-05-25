@@ -49,7 +49,8 @@ public class AthleteServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
 		if (pathInfo.equals("/upload"))
-			this.handleUpload(request, response);
+			System.out.println("...");
+			//this.handleUpload(request, response);
 		else if (pathInfo.equals("/delete"))
 			this.doDeleteAthlete(request, response);
 		else {
@@ -78,19 +79,19 @@ public class AthleteServlet extends HttpServlet{
 	}
 	
 	
-	private void handleUpload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//@FormDataParam("file") InputStream fileInputStream = request.getParameter("file");
-		if (ServletFileUpload.isMultipartContent(request)) {
-			ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
-			List<FileItem> items = upload.parseRequest(request);
-			for (FileItem item : items) {
-				if (!item.isFormField()) {
-					InputStream fileContent = item.getInputStream();
-					this.doUploadCsvFile(request, response, fileContent);
-				}
-			}
-		}
-	}
+	//private void handleUpload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//	//@FormDataParam("file") InputStream fileInputStream = request.getParameter("file");
+	//	if (ServletFileUpload.isMultipartContent(request)) {
+	//		ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
+	//		List<FileItem> items = upload.parseRequest(request);
+	//		for (FileItem item : items) {
+	//			if (!item.isFormField()) {
+	//				InputStream fileContent = item.getInputStream();
+	//				this.doUploadCsvFile(request, response, fileContent);
+	//			}
+	//		}
+	//	}
+	//}
 	
 	private void doUploadCsvFile(HttpServletRequest request, HttpServletResponse response, InputStream fileInputStream) throws ServletException, IOException {
 		try {
