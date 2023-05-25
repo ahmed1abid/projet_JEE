@@ -14,6 +14,7 @@
 						<th scope="col">Nb sessions</th>
 						<th scope="col">Nb athlètes</th>
 						<th scope="col">Moyenne d'âge</th>
+						<th scope="col">Temps d'épreuves</th>
 					</tr>
 				</thead>
 				<!-- tbody crée par le script -->
