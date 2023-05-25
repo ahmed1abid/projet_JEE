@@ -6,7 +6,7 @@ document.getElementById('addSiteForm').addEventListener('submit', function (even
     const city = form.elements['city'].value;
     const category = form.elements['category'].value;
 
-    fetch('/projet_JEE/api/site-management/new', {
+    fetch('/projet_JEE/site-management/new', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -32,7 +32,7 @@ document.getElementById('editSiteForm').addEventListener('submit', function (eve
     const newCity = form.elements['newCity'].value;
     const newCategory = form.elements['newCategory'].value;
 
-    fetch(`/projet_JEE/api/site-management/edit?id=${encodeURIComponent(editId)}`, {
+    fetch(`/projet_JEE/site-management/edit?id=${encodeURIComponent(editId)}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -55,7 +55,7 @@ document.getElementById('deleteSiteForm').addEventListener('submit', function (e
     const form = event.target;
     const siteId = form.elements['siteId'].value;
 
-    fetch(`/projet_JEE/api/site-management/delete?id=${encodeURIComponent(siteId)}`, {
+    fetch(`/projet_JEE/site-management/delete?id=${encodeURIComponent(siteId)}`, {
         method: 'POST',
     })
         .then(response => {

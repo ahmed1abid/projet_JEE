@@ -55,7 +55,8 @@ public class AthleteServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
 		if (pathInfo.equals("/upload"))
-			this.handleUpload(request, response);
+			System.out.println("...");
+			//this.handleUpload(request, response);
 		else if (pathInfo.equals("/delete"))
 			this.doDeleteAthlete(request, response);
 		else {
