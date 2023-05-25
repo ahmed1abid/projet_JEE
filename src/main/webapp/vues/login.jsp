@@ -6,15 +6,19 @@
     <title>Connexion</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-pzjw8w+uaBWp6UE6TEe5PA2L+y0x7dPj7fugx6py0F/pSmlz+H+6Fci4nxl+6nQ1" crossorigin="anonymous">
+        <style>
+.confirmation-message {
+    background-color: lightgreen;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+</style>
+        
 </head>
 <body>
     <jsp:include page="includes/header.jsp" />
- <%-- Vérifier si le message existe et l'afficher --%>
-    <% if (request.getAttribute("message") != null) { %>
-        <div class="confirmation-message">
-            <h3><%= request.getAttribute("message") %></h3>
-        </div>
-    <% } %>
+    
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -51,6 +55,13 @@
                             <div class="text-center">
                                 <button type="submit" class="btn btn-secondary">Créer un compte</button>
                             </div>
+                           	<% String message = (String) request.getAttribute("message"); %>
+							<% if (message != null) { %>
+  								  <div class="confirmation-message">
+      								  <h3><%= message %></h3>
+    							  </div>
+							<% } %>
+
                         </form>
                         <form action="/projet_JEE/user-management/delete" method="post">
                             <input type="hidden" name="action" value="delete">

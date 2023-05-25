@@ -105,10 +105,13 @@ public class UserServlet extends HttpServlet {
 	            		response.getWriter().write("This user name is already taken");
 	            	}
 	            	else {
-	            		response.setStatus(422);
-	            		String message = "Le compte a été créé avec succès !";
-	                    request.setAttribute("message", message);
-	                    request.getRequestDispatcher("/projet_JEE/vues/login.jsp").forward(request, response);
+
+	            		    response.setStatus(200);
+	            		   
+	            		    String message = "Le compte a été créé avec succès !";
+	            		    request.setAttribute("message", message);
+	            		    response.sendRedirect("/projet_JEE/vues/login.jsp");
+
 	                
 	            	}
 	            } catch (NoSuchAlgorithmException e) {
