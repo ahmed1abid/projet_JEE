@@ -2,8 +2,8 @@
  * 
  */
 async function loadStat(){
-	const disciplinesData = await fetch('/projet_JEE/api/discipline-management/disciplines');
-	const sitesData = await fetch('/projet_JEE/api/site-management/sites');
+	const disciplinesData = await fetch('/projet_JEE/discipline-management/disciplines');
+	const sitesData = await fetch('/projet_JEE/site-management/sites');
 	try {
 		const disciplines = await disciplinesData.json();
 		const sites = await sitesData.json();
@@ -53,7 +53,7 @@ async function loadStat(){
 }
 
 async function getStats(discipline) {
-	const statsData = await fetch(`/projet_JEE/api/discipline-management/statistics?discipline=${discipline}`, {
+	const statsData = await fetch(`/projet_JEE/discipline-management/statistics?discipline=${discipline}`, {
 		method: 'GET'
 	});
 	const stats = statsData.json();

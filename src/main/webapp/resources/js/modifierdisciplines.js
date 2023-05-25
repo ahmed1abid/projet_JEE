@@ -5,7 +5,7 @@ document.getElementById('addDisciplineForm').addEventListener('submit', function
     const name = form.elements['name'].value;
     const flag = form.elements['flag'].value;
 
-    fetch('/projet_JEE/api/discipline-management/new', {
+    fetch('/projet_JEE/discipline-management/new', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -29,7 +29,7 @@ document.getElementById('editDisciplineForm').addEventListener('submit', functio
     const disciplineName = form.elements['disciplineName'].value;
     const newFlag = form.elements['newFlag'].value;
 
-    fetch(`/projet_JEE/api/discipline-management/edit?name=${encodeURIComponent(disciplineName)}`, {
+    fetch(`/projet_JEE/discipline-management/edit?name=${encodeURIComponent(disciplineName)}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -52,7 +52,7 @@ document.getElementById('deleteDisciplineForm').addEventListener('submit', funct
     const form = event.target;
     const disciplineName = form.elements['disciplineName'].value;
 
-    fetch(`/projet_JEE/api/discipline-management/delete?name=${encodeURIComponent(disciplineName)}`, {
+    fetch(`/projet_JEE/discipline-management/delete?name=${encodeURIComponent(disciplineName)}`, {
         method: 'POST'
     })
         .then(response => {
