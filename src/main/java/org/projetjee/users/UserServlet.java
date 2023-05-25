@@ -92,7 +92,7 @@ public class UserServlet extends HttpServlet {
 	        response.getWriter().write(json);
 	    }
 
-	    private void handleRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    private void handleRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 	        String username = request.getParameter("registerUsername");
 	        String password = request.getParameter("registerPassword");
 	        String role = request.getParameter("registerRole");
@@ -106,7 +106,10 @@ public class UserServlet extends HttpServlet {
 	            	}
 	            	else {
 	            		response.setStatus(422);
-		            	response.sendRedirect("/projet_JEE/vues/login.jsp"); // Redirige vers la page de connexion après la création du compte
+	            		String message = "Le compte a été créé avec succès !";
+	                    request.setAttribute("message", message);
+	                    request.getRequestDispatcher("/projet_JEE/vues/login.jsp").forward(request, response);
+	                
 	            	}
 	            } catch (NoSuchAlgorithmException e) {
 	            	e.printStackTrace();

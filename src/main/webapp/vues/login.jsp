@@ -9,7 +9,12 @@
 </head>
 <body>
     <jsp:include page="includes/header.jsp" />
-
+ <%-- Vérifier si le message existe et l'afficher --%>
+    <% if (request.getAttribute("message") != null) { %>
+        <div class="confirmation-message">
+            <h3><%= request.getAttribute("message") %></h3>
+        </div>
+    <% } %>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
