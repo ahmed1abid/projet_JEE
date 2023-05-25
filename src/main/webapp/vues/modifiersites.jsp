@@ -11,38 +11,81 @@
 		<section>
 			<h2>Ajouter un site</h2>
 			<form id="addSiteForm">
-				<label for="name">Nom :</label>
-				<input type="text" id="name" name="name" required>
-				<label for="city">Ville :</label>
-				<input type="text" id="city" name="city" required>
-				<label for="category">Catégorie :</label>
-				<select id="category" name="category" required>
-					<option value="stade">Stade</option>
-					<option value="salle_de_spectacle">Salle de spectacle</option>
-					<option value="lieu_public">Lieu public</option>
-					<option value="centre_aquatique">Centre aquatique</option>
-				</select>
-				<button type="submit">Ajouter</button>
+				<div class="row g-2 align-items-center">
+					<div class="col-auto">
+						<label class="col-form-label" for="name">Nom :</label>
+					</div>
+					<div class="col-auto">
+						<input class="form-control" type="text" id="name" name="name" required>
+					</div>
+				</div>
+				<div class="row g-2 align-items-center">
+					<div class="col-auto">
+						<label class="col-form-label" for="city">Ville :</label>
+					</div>
+					<div class="col-auto">
+						<input class="form-control" type="text" id="city" name="city" required>
+					</div>
+				</div>
+				<div class="row g-2 align-items-center">
+					<div class="col-auto">
+						<label class="col-form-label" for="category">Catégorie :</label>
+					</div>
+					<div class="col-auto">
+						<select class="form-select" id="category" name="category" required>
+							<option value="stade">Stade</option>
+							<option value="salle_de_spectacle">Salle de spectacle</option>
+							<option value="lieu_public">Lieu public</option>
+							<option value="centre_aquatique">Centre aquatique</option>
+						</select>
+					</div>
+				</div>
+				<button class="btn btn-outline-primary" type="submit">Ajouter</button>
 			</form>
 		</section>
 		
 		<section>
 			<h2>Modifier un site</h2>
 			<form id="editSiteForm">
-				<label for="editId">ID du site :</label>
-				<input type="text" id="editId" name="editId" required>
-				<label for="newName">Nouveau nom :</label>
-				<input type="text" id="newName" name="newName" required>
-				<label for="newCity">Nouvelle ville :</label>
-				<input type="text" id="newCity" name="newCity" required>
-				<label for="newCategory">Nouvelle catégorie :</label>
-				<select id="newCategory" name="newCategory" required>
-					<option value="stade">Stade</option>
-					<option value="salle_de_spectacle">Salle de spectacle</option>
-					<option value="lieu_public">Lieu public</option>
-					<option value="centre_aquatique">Centre aquatique</option>
-				</select>
-				<button type="submit">Modifier</button>
+				<div class="row g-2 align-items-center">
+					<div class="col-auto">
+						<label class="col-form-label" for="editId">ID du site :</label>
+					</div>
+					<div class="col-auto">
+						<input class="form-control"type="text" id="editId" name="editId" required>
+					</div>
+				</div>
+				<div class="row g-2 align-items-center">
+					<div class="col-auto">
+						<label class="col-form-label" for="newName">Nouveau nom :</label>
+					</div>
+					<div class="col-auto">
+						<input class="form-control" type="text" id="newName" name="newName" required>
+					</div>
+				</div>
+				<div class="row g-2 align-items-center">
+					<div class="col-auto">
+						<label class="col-form-label" for="newCity">Nouvelle ville :</label>
+					</div>
+					<div class="col-auto">
+						<input class="form-control" type="text" id="newCity" name="newCity" required>
+					</div>
+				</div>
+				<div class="row g-2 align-items-center">
+					<div class="col-auto">
+						<label class="col-form-label" for="newCategory">Nouvelle catégorie :</label>
+					</div>
+					<div class="col-auto">		
+						<select class="form-select" id="newCategory" name="newCategory" required>
+							<option value="stade">Stade</option>
+							<option value="salle_de_spectacle">Salle de spectacle</option>
+							<option value="lieu_public">Lieu public</option>
+							<option value="centre_aquatique">Centre aquatique</option>
+						</select>
+					</div>
+				</div>
+
+				<button class="btn btn-outline-primary" type="submit">Modifier</button>
 			</form>
 		</section>
 		

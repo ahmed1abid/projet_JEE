@@ -15,7 +15,7 @@
 				<table class="table table-hover" id="sitelist">
 					<thead>
 						<tr>
-							<td scope="col">N° </td>
+							<th scope="col">N° </th>
 							<th scope="col">Nom du site</th>
 							<th scope="col">Ville</th>
 							<th scope="col">Catégorie</th>
