@@ -56,7 +56,7 @@ async function getStats(discipline) {
 	const statsData = await fetch(`/projet_JEE/discipline-management/statistics?discipline=${discipline}`, {
 		method: 'GET'
 	});
-	const stats = statsData.json();
+	const stats = await statsData.json();
 	return stats;
 } 
 
