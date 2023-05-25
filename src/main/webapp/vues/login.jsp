@@ -13,11 +13,29 @@
     margin-bottom: 10px;
     text-align: center;
 }
+.suppression-message {
+    back	ground-color: red;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
 </style>
         
 </head>
 <body>
     <jsp:include page="includes/header.jsp" />
+    <% String message = request.getParameter("message"); %>
+							<% if (message != null && !message.isEmpty() && message =="Le compte a été créé avec succès !" ) { %>
+  								  <div class="confirmation-message">
+      								  <h3><%= message %></h3>
+    							  </div>
+							<% } %>
+	   <% String message2 = request.getParameter("message"); %>
+							<% if (message2 != null && !message2.isEmpty() && message2 !="Le compte a été créé avec succès !" ) { %>
+  								  <div class="suppression-message">
+      								  <h3><%= message2 %></h3>
+    							  </div>
+							<% } %>
     
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -55,14 +73,10 @@
                             <div class="text-center">
                                 <button type="submit" class="btn btn-secondary">Créer un compte</button>
                             </div>
-                           	<% String message = (String) request.getAttribute("message"); %>
-							<% if (message != null) { %>
-  								  <div class="confirmation-message">
-      								  <h3><%= message %></h3>
-    							  </div>
-							<% } %>
+                           
 
                         </form>
+                        	
                         <form action="/projet_JEE/user-management/delete" method="post">
                             <input type="hidden" name="action" value="delete">
                             <div class="form-group mt-3">

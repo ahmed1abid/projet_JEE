@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -109,9 +111,7 @@ public class UserServlet extends HttpServlet {
 	            		    response.setStatus(200);
 	            		   
 	            		    String message = "Le compte a été créé avec succès !";
-	            		    request.setAttribute("message", message);
-	            		    response.sendRedirect("/projet_JEE/vues/login.jsp");
-
+	            		    response.sendRedirect("/projet_JEE/vues/login.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
 	                
 	            	}
 	            } catch (NoSuchAlgorithmException e) {
@@ -131,8 +131,10 @@ public class UserServlet extends HttpServlet {
 	        if (deleteUsername != null) {
 	        	try {
 	        		if (userDAO.DeleteUser(deleteUsername, deletePassword)) {
-		                response.sendRedirect("/projet_JEE/vues/login.jsp"); // Redirige vers la page de connexion après la suppression de l'utilisateur
-		            } else {
+	            		   
+	            		    String message = "Le compte a été supprimé avec succès !";
+	            		    response.sendRedirect("/projet_JEE/vues/login.jsp?message=" + URLEncoder.encode(message, "UTF-8"));		         
+	            		    } else {
 		                response.setStatus(500);
 		                response.getWriter().write("User deletion failed");
 		            }
