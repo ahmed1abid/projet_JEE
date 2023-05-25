@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title text-center">Connexion</h3>
-                        <form action="/projet_JEE/api/user-management/login" method="post">
+                        <form action="/projet_JEE/user-management/login" method="post">
                             <div class="form-group">
                                 <label for="username">Nom d'utilisateur :</label>
                                 <input type="text" class="form-control" id="username" name="username" required>
@@ -29,7 +29,7 @@
                                 <button type="submit" class="btn btn-primary">Se connecter</button>
                             </div>
                         </form>
-                        <form action="/projet_JEE/api/user-management/registration" method="post">
+                        <form action="/projet_JEE/user-management/registration" method="post">
                             <input type="hidden" name="action" value="register">
                             <div class="form-group">
                                 <label for="registerUsername">Nom d'utilisateur :</label>
@@ -47,7 +47,7 @@
                                 <button type="submit" class="btn btn-secondary">Créer un compte</button>
                             </div>
                         </form>
-                        <form action="/projet_JEE/api/user-management/delete" method="post">
+                        <form action="/projet_JEE/user-management/delete" method="post">
                             <input type="hidden" name="action" value="delete">
                             <div class="form-group mt-3">
                                 <label for="deleteUsername">Nom d'utilisateur :</label>
