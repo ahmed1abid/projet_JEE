@@ -4,8 +4,8 @@
 async function loadSessions() {
 	const sessionsData = await fetch("/projet_JEE/session-management/sessions");
 	try {
-		const sessions = sessionsData.json();
-		const sessionList = document.createElement("sessionlist");
+		const sessions = await sessionsData.json();
+		const sessionList = document.getElementById("sessionlist");
 		let tbodySession = document.createElement("tbody");
 		sessionList.append(tbodySession);
 		
@@ -31,9 +31,8 @@ async function loadSessions() {
 			td_type.append(session.type);
 			let td_category = document.createElement("td");
 			td_category.append(session.category);
-			
 			tr.append(td_code, td_date, td_start_time, td_end_time, td_discipline, td_site_name, td_site_city, td_description, td_type, td_category);
-			tbodySession.append(tr);
+			tbodySession.appendChild(tr);
 		} 
 	} catch (error) {
 		console.log("Erreur lors du chargement des sessions: " + error);

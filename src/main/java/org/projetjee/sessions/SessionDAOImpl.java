@@ -98,7 +98,7 @@ public class SessionDAOImpl implements SessionDAO{
 		// Create query statement to retrieve sessions that
 		// have the same date, site and discipline with the new session
 		String query_base = String.format("select end_time from session "
-				+ "where idSite='%s' and date=? group by end_time desc "
+				+ "where idSite='%s' and date=? order by end_time desc "
 				+ "having discipline='%s'", site, discipline);
 		try {
 			PreparedStatement pstatement = conn.prepareStatement(query_base);
