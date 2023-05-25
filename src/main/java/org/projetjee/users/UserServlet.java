@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@WebServlet("/user-management/*")
+@WebServlet("/user-management")
 public class UserServlet extends HttpServlet {
 	
 	private UserDAO userDAO = new UserDAOImpl();
@@ -93,9 +93,9 @@ public class UserServlet extends HttpServlet {
 	    }
 
 	    private void handleRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException {
-	        String username = request.getParameter("username");
-	        String password = request.getParameter("password");
-	        String role = request.getParameter("role");
+	        String username = request.getParameter("registerUsername");
+	        String password = request.getParameter("registerPassword");
+	        String role = request.getParameter("registerRole");
 
 	        if (username != null && password != null && role != null) {
 	            User newUser = new User(username, password, UserRole.valueOf(role));
