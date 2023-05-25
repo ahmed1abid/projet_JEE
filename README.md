@@ -4,6 +4,8 @@
 
 groupe 9 (Laurent, Ahmed, Axel)
 
+la branch la plus à jour : dev
+
 l'url d'accueil : http://localhost:8080/projet_JEE/vues/index.jsp
 
 les comptes à utiliser : 
