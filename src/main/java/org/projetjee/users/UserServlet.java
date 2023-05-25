@@ -5,10 +5,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.net.URLEncoder;
-
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
@@ -19,16 +19,6 @@ import com.google.gson.GsonBuilder;
 public class UserServlet extends HttpServlet {
 	
 	private UserDAO userDAO = new UserDAOImpl();
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pathInfo = request.getPathInfo();
-		if (pathInfo.equals("/user"))
-			this.doGetUserByAccount(request, response);
-		else {
-			response.setStatus(404);
-			response.getWriter().write("RESSOURCE NOT FOUND");
-		}
-	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
@@ -44,57 +34,46 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 	
-	private void doGetUserByAccount(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+	private ArrayList<User> doGetUserByAccount(String username, String password) {
 		ArrayList<User> users;
-		if (username != null && password != null)
-			try {
-				users = userDAO.findByUserName(username, password);
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-				response.setStatus(500);
-				users = new ArrayList<User>();
-			}
-		else 
+		try {
+			users = userDAO.findByUserName(username, password);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 			users = new ArrayList<User>();
-		
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		String json = gson.toJson(users);
-		
-		response.setContentType("application/json");
-		response.setStatus(200);
-		response.getWriter().write(json);
+		}
+		return users;
 	}
 	  private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	        String username = request.getParameter("username");
 	        String password = request.getParameter("password");
 	        ArrayList<User> users;
 
-	        if (username != null && password != null) {
-	            try {
-					users = userDAO.findByUserName(username, password);
-				} catch (NoSuchAlgorithmException e) {
-					e.printStackTrace();
-					response.setStatus(500);
-					users = new ArrayList<User>();
+	        if (username != null && password != null && username != "" && password != "") {
+				users = this.doGetUserByAccount(username, password);
+				if (users.size() == 1) {
+					request.getSession().setAttribute("username", username);
+					request.getSession().setAttribute("role", users.get(0).getRole().toString());
+					request.getSession().setMaxInactiveInterval(3600);	// 1H (in seconds) session timeout
+					response.setStatus(200);
+					response.sendRedirect("/projet_JEE/vues/index.jsp");
+				} else {
+					response.setStatus(404);
+					response.sendRedirect("/projet_JEE/vues/login.jsp");
 				}
 	        } else {
-	            users = new ArrayList<User>();
+	        	response.setStatus(400);
+	        	response.sendRedirect("/projet_JEE/vues/login.jsp");
 	        }
-
-	        GsonBuilder builder = new GsonBuilder();
-	        Gson gson = builder.create();
-	        String json = gson.toJson(users);
-
-	        response.setContentType("application/json");
-	        response.setStatus(200);
-	        response.getWriter().write(json);
 	    }
 
 	    private void handleRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	    	HttpSession session = request.getSession(false);
+	    	if (session == null || session.getAttribute("role") != "admin") {
+	    		response.setStatus(403);
+	    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+	    		return;
+	    	}
 	        String username = request.getParameter("registerUsername");
 	        String password = request.getParameter("registerPassword");
 	        String role = request.getParameter("registerRole");
@@ -107,12 +86,9 @@ public class UserServlet extends HttpServlet {
 	            		response.getWriter().write("This user name is already taken");
 	            	}
 	            	else {
-
 	            		    response.setStatus(200);
-	            		   
 	            		    String message = "Le compte a été créé avec succès !";
-	            		    response.sendRedirect("/projet_JEE/vues/login.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
-	                
+	            		    response.sendRedirect("/projet_JEE/vues/login.jsp?message=" + URLEncoder.encode(message, "UTF-8"));	                
 	            	}
 	            } catch (NoSuchAlgorithmException e) {
 	            	e.printStackTrace();
@@ -125,6 +101,12 @@ public class UserServlet extends HttpServlet {
 	    }
 
 	    private void handleUserDeletion(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    	HttpSession session = request.getSession(false);
+	    	if (session == null || session.getAttribute("role") != "admin") {
+	    		response.setStatus(403);
+	    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+	    		return;
+	    	}
 	        String deleteUsername = request.getParameter("deleteUsername");
 	        String deletePassword = request.getParameter("deletePassword");
 

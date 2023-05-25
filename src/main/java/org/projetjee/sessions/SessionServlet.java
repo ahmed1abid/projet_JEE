@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -61,7 +62,12 @@ public class SessionServlet extends HttpServlet {
 	}
 	
 	private void doCreateSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
+		HttpSession usersession = request.getSession(false);
+    	if (usersession == null || usersession.getAttribute("role") != "gesS") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		String code = request.getParameter("code");
 		Date date = Date.valueOf(request.getParameter("date"));
 		Time start_time = Time.valueOf(request.getParameter("start_time"));
@@ -93,7 +99,12 @@ public class SessionServlet extends HttpServlet {
 	}
 	
 	private void doEditSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
+		HttpSession usersession = request.getSession(false);
+    	if (usersession == null || usersession.getAttribute("role") != "gesS") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		String code = request.getParameter("code");
 		Date newDate = Date.valueOf(request.getParameter("date"));
 		Time newStart_time = Time.valueOf(request.getParameter("start_time"));
@@ -118,7 +129,13 @@ public class SessionServlet extends HttpServlet {
 		}	
 	}
 	
-	private void doDeleteSession(HttpServletRequest request, HttpServletResponse response) {
+	private void doDeleteSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession usersession = request.getSession(false);
+    	if (usersession == null || usersession.getAttribute("role") != "gesS") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		String code = request.getParameter("code");
 		if (!sessionDAO.DeleteSession(code)) {
 			response.setStatus(500);

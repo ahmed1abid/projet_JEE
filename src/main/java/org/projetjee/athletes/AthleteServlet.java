@@ -22,6 +22,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 @WebServlet("/athlete-management/*")
@@ -76,12 +77,24 @@ public class AthleteServlet extends HttpServlet{
 	}
 	
 	private void handleUpload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+    	if (session == null || session.getAttribute("role") != "admin") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		Part filePart = request.getPart("file");
 		InputStream fileContent = filePart.getInputStream();
 		this.doUploadCsvFile(request, response, fileContent);
 	}
 	
 	private void doUploadCsvFile(HttpServletRequest request, HttpServletResponse response, InputStream fileInputStream) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+    	if (session == null || session.getAttribute("role") != "admin") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		try {
 			byte[] bytes = fileInputStream.readAllBytes();
 			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
@@ -111,7 +124,13 @@ public class AthleteServlet extends HttpServlet{
 		}
 	}
 		
-	private void doDeleteAthlete(HttpServletRequest request, HttpServletResponse response) {
+	private void doDeleteAthlete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession(false);
+    	if (session == null || session.getAttribute("role") != "admin") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		String firstName = request.getParameter("first_name");
 		String lastName = request.getParameter("last_name");
 		if(!athleteDAO.DeleteAthlete(firstName, lastName)) {

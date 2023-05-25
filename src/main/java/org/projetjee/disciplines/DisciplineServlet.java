@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,7 +82,13 @@ public class DisciplineServlet extends HttpServlet {
 		
 	}
 	
-	private void doCreateDiscipline(HttpServletRequest request, HttpServletResponse response) {
+	private void doCreateDiscipline(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession(false);
+    	if (session == null || session.getAttribute("role") != "gesC") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		String name = request.getParameter("name");
 		Integer flag = Integer.valueOf(request.getParameter("flag"));
 		Discipline discipline = new Discipline(name, flag!=0);
@@ -91,7 +98,13 @@ public class DisciplineServlet extends HttpServlet {
 			response.setStatus(200);
 	}
 	
-	private void doSetDisciplineFlag(HttpServletRequest request, HttpServletResponse response) {
+	private void doSetDisciplineFlag(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession(false);
+    	if (session == null || session.getAttribute("role") != "gesC") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		String name = request.getParameter("name");
 		Integer new_flag = Integer.valueOf(request.getParameter("flag"));
 		if (!disciplineDAO.EditDiscipline(name, new_flag!=0)) {
@@ -100,7 +113,13 @@ public class DisciplineServlet extends HttpServlet {
 			response.setStatus(200);
 	}
 	
-	private void doDeleteDiscipline(HttpServletRequest request, HttpServletResponse response) {
+	private void doDeleteDiscipline(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession(false);
+    	if (session == null || session.getAttribute("role") != "gesC") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		String name = request.getParameter("name");
 		if (!disciplineDAO.DeleteDiscipline(name)) {
 			response.setStatus(500);
