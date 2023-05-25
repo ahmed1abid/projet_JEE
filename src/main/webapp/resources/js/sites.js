@@ -8,6 +8,8 @@ async function loadSites() {
         
         for (const site of sites) {
             let tr = document.createElement("tr");
+            let td_id = document.createElement("td");
+            td_id.append(site.id);
             let td_name = document.createElement("td");
             td_name.append(site.name);
             let td_city = document.createElement("td");
@@ -15,7 +17,7 @@ async function loadSites() {
             let td_category = document.createElement("td");
             td_category.append(site.category);
 
-            tr.append(td_name, td_city, td_category);
+            tr.append(td_id, td_name, td_city, td_category);
             tbodySite.appendChild(tr);
         }
     } catch (error) {
