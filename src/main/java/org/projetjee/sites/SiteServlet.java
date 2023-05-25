@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +61,12 @@ public class SiteServlet extends HttpServlet {
 	}
 	
 	private void doCreateSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
+		HttpSession usersession = request.getSession(false);
+    	if (usersession == null || usersession.getAttribute("role") != "gesC") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		String name = request.getParameter("name");
 		String city = request.getParameter("city");
 		String category = request.getParameter("category");
@@ -77,8 +83,13 @@ public class SiteServlet extends HttpServlet {
 		}
 	}
 	
-	private void doEditSite(HttpServletRequest request, HttpServletResponse response) {
-		
+	private void doEditSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession usersession = request.getSession(false);
+    	if (usersession == null || usersession.getAttribute("role") != "gesC") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		int id = Integer.valueOf(request.getParameter("id"));
 		String newName = request.getParameter("newName");
 		String newCity = request.getParameter("newCity");
@@ -91,7 +102,13 @@ public class SiteServlet extends HttpServlet {
 		
 	}
 	
-	private void doDeleteSite(HttpServletRequest request, HttpServletResponse response) {
+	private void doDeleteSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession usersession = request.getSession(false);
+    	if (usersession == null || usersession.getAttribute("role") != "gesS") {
+    		response.setStatus(403);
+    		response.sendRedirect("/projet_JEE/vues/login.jsp");
+    		return;
+    	}
 		int id = Integer.valueOf(request.getParameter("id"));
 		if (!siteDAO.DeleteSite(id))
 			response.setStatus(500);
