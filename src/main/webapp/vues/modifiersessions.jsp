@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <jsp:include page="includes/header.jsp" />
 <title>Gestion des sessions</title>
 <main>
@@ -10,7 +10,7 @@
 				<input type="text" id="code" name="code" required>
 				<label for="date">Date :</label>
 				<input type="date" id="date" name="date" required>
-				<label for="startTime">Heure de début :</label>
+				<label for="startTime">Heure de dÃ©but :</label>
 				<input type="time" id="startTime" name="startTime" required>
 				<label for="endTime">Heure de fin :</label>
 				<input type="time" id="endTime" name="endTime" required>
@@ -22,14 +22,14 @@
 				<textarea id="description" name="description" required></textarea>
 				<label for="type">Type :</label>
 				<select id="type" name="type" required>
-					<option value="COURS">Cours</option>
-					<option value="SEMINAIRE">Séminaire</option>
-					<option value="ATELIER">Atelier</option>
+					<option value="qualifications">Qualifications</option>
+					<option value="medailles">MÃ©dailles</option>
 				</select>
-				<label for="category">Catégorie :</label>
+				<label for="category">CatÃ©gorie :</label>
 				<select id="category" name="category" required>
-					<option value="PRINCIPALE">Principale</option>
-					<option value="COMPLEMENTAIRE">Complémentaire</option>
+					<option value="H">Homme</option>
+					<option value="F">Femme</option>
+					<option value="M">Mixte</option>
 				</select>
 				<button type="submit">Ajouter</button>
 			</form>
@@ -42,7 +42,7 @@
 				<input type="text" id="sessionCode" name="sessionCode" required>
 				<label for="newDate">Nouvelle date :</label>
 				<input type="date" id="newDate" name="newDate" required>
-				<label for="newStartTime">Nouvelle heure de début :</label>
+				<label for="newStartTime">Nouvelle heure de dÃ©but :</label>
 				<input type="time" id="newStartTime" name="newStartTime" required>
 				<label for="newEndTime">Nouvelle heure de fin :</label>
 				<input type="time" id="newEndTime" name="newEndTime" required>
@@ -53,15 +53,15 @@
 				<label for="newDescription">Nouvelle description :</label>
 				<textarea id="newDescription" name="newDescription" required></textarea>
 				<label for="newType">Nouveau type :</label>
-				<select id="newType" name="newType" required>
-					<option value="COURS">Cours</option>
-					<option value="SEMINAIRE">Séminaire</option>
-					<option value="ATELIER">Atelier</option>
+				<select id="type" name="type" required>
+					<option value="qualifications">Qualifications</option>
+					<option value="medailles">MÃ©dailles</option>
 				</select>
-				<label for="newCategory">Nouvelle catégorie :</label>
-				<select id="newCategory" name="newCategory" required>
-					<option value="PRINCIPALE">Principale</option>
-					<option value="COMPLEMENTAIRE">Complémentaire</option>
+				<label for="category">CatÃ©gorie :</label>
+				<select id="category" name="category" required>
+					<option value="H">Homme</option>
+					<option value="F">Femme</option>
+					<option value="M">Mixte</option>
 				</select>
 				<button type="submit">Modifier</button>
 			</form>
@@ -76,5 +76,5 @@
 			</form>
 		</section>
 </main>
-
+<script src="../resources/js/modifiersessions.jsp"></script>
 <jsp:include page="includes/footer.jsp" />
