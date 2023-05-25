@@ -7,8 +7,10 @@ document.getElementById('addSessionForm').addEventListener('submit', function (e
     const form = event.target;
     const code = form.elements['code'].value;
     const date = form.elements['date'].value;
-    const start_time = form.elements['startTime'].value;
-    const end_time = form.elements['endTIme'].value;
+    let start_time = form.elements['startTime'].value;
+    start_time = start_time + ":00";
+    let end_time = form.elements['endTime'].value;
+    end_time = end_time + ":00";
     const discipline = form.elements['discipline'].value;
     const site = form.elements['site'].value;
     const description = form.elements['description'].value;
@@ -33,13 +35,15 @@ document.getElementById('addSessionForm').addEventListener('submit', function (e
 });
 
 // Soumettre le formulaire de modification de site
-document.getElementById('editSiteForm').addEventListener('submit', function (event) {
+document.getElementById('editSessionForm').addEventListener('submit', function (event) {
     event.preventDefault();
     const form = event.target;
     const code = form.elements['code'].value;
     const date = form.elements['date'].value;
-    const start_time = form.elements['startTime'].value;
-    const end_time = form.elements['endTIme'].value;
+    let start_time = form.elements['startTime'].value;
+    start_time = start_time + ":00";
+    let end_time = form.elements['endTime'].value;
+    end_time = end_time + ":00";
     const discipline = form.elements['discipline'].value;
     const site = form.elements['site'].value;
     const description = form.elements['description'].value;

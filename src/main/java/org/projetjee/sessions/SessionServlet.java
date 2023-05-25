@@ -66,7 +66,7 @@ public class SessionServlet extends HttpServlet {
 		Date date = Date.valueOf(request.getParameter("date"));
 		Time start_time = Time.valueOf(request.getParameter("start_time"));
 		Time end_time = Time.valueOf(request.getParameter("end_time"));
-		String discipline = request.getParameter("dicipline");
+		String discipline = request.getParameter("discipline");
 		int site = Integer.valueOf(request.getParameter("site"));
 		String description = request.getParameter("description");
 		String type = request.getParameter("type");
@@ -103,7 +103,7 @@ public class SessionServlet extends HttpServlet {
 		String newDescription = request.getParameter("description");
 		String newType = request.getParameter("type");
 		String newCategory = request.getParameter("category");
-		
+
 		Session session = new Session(code, newDate, newStart_time, newEnd_time, newDiscipline, newSite, newDescription,
 				SessionType.valueOf(newType), SessionCategory.valueOf(newCategory));
 		try {

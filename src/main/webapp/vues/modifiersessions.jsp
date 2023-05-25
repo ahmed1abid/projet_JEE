@@ -76,5 +76,5 @@
 			</form>
 		</section>
 </main>
-<script src="../resources/js/modifiersessions.jsp"></script>
+<script src="../resources/js/modifiersessions.js"></script>
 <jsp:include page="includes/footer.jsp" />
